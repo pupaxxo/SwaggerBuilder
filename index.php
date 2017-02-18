@@ -4,12 +4,16 @@ use SwagBag\Components\Contact;
 use SwagBag\Components\Info;
 use SwagBag\Components\License;
 use SwagBag\Components\Operation;
-use SwagBag\Components\Parameter;
+use SwagBag\Components\Parameters\BodyParam;
+use SwagBag\Components\Parameters\OtherParam;
+use SwagBag\Components\Parameters\Parameter;
 use SwagBag\Components\Path;
 use SwagBag\Components\Response;
+use SwagBag\Components\Schema;
 use SwagBag\Components\Swagger;
 use SwagBag\Mime;
 use SwagBag\Scheme;
+use SwagBag\Type;
 use SwagBag\Verb;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -58,11 +62,19 @@ $createUser = (new Operation(Verb::POST, [
 $listUsers = (new Operation(Verb::GET, [
     new Response(200),
 ]))
-    ->addParameter(new Parameter('page'));
+    ->addParameter(new OtherParam('page'))
+    ->addParameter(
+        (new OtherParam('first_name', false, Parameter::QUERY, Type::ARRAY))
+            ->setEnumItems(['Huey', 'Dewey', 'Louie'])
+            ->setDescription('The name by which to filter users.')
+            ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
+    );
 
 $updateUser = (new Operation(Verb::PUT, [
     new Response(422),
-]));
+]))
+    ->addParameter(new BodyParam('first_name', true, new Schema()))
+    ->addParameter(new BodyParam('age', true, new Schema()));
 
 $users = new Path('/users', [
     $listUsers,
