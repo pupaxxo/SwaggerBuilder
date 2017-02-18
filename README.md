@@ -33,14 +33,44 @@ $info = (new Info('Example', '0.1.0'))
 /**
  * Define Swagger Paths
  */
-$paths = [];
+
+// Home path
+$home = new Path('/', [
+    new Operation(Verb::GET, [
+        new Response(),
+    ]),
+]);
+
+// Users path
+$createUser = (new Operation(Verb::POST, [
+    new Response(200),
+    new Response(422),
+]))
+    ->setSummary('Persist a user.')
+    ->setDescription('Stores a user in a database.')
+    ->setOperationId('users.persist');
+
+$listUsers = (new Operation(Verb::GET, [
+    new Response(200),
+]))
+    ->addParameter(new Parameter('page'));
+
+$updateUser = (new Operation(Verb::PUT, [
+    new Response(422),
+]));
+
+$users = new Path('/users', [
+    $listUsers,
+    $createUser,
+    $updateUser,
+]);
 
 /**
  * Define Swagger
  */
-$swagger = (new Swagger('2.0', $info, $paths))
+$swagger = (new Swagger('2.0', $info, [$home, $users]))
     ->setHost('192.176.99.100')
-    ->setBasePath('/')
+    ->setBasePath('/api')
     ->addScheme(Scheme::HTTPS)
     ->addConsumedMime(Mime::JSON)
     ->addProducedMime(Mime::JSON);
@@ -50,7 +80,7 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
 ###Output
 ```json
 {
-    "version": "2.0",
+    "swagger": "2.0",
     "info": {
         "title": "Example",
         "version": "0.1.0",
@@ -70,8 +100,43 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
             "x-extra-license-data": "Really, this is all just for example."
         }
     },
+    "paths": {
+        "/": {
+            "get": {
+                "responses": {
+                    "200": []
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "responses": {
+                    "200": []
+                },
+                "parameters": {
+                    "page": [
+                        []
+                    ]
+                }
+            },
+            "post": {
+                "responses": {
+                    "200": [],
+                    "422": []
+                },
+                "summary": "Persist a user.",
+                "description": "Stores a user in a database.",
+                "operationId": "users.persist"
+            },
+            "put": {
+                "responses": {
+                    "422": []
+                }
+            }
+        }
+    },
     "host": "192.176.99.100",
-    "basePath": "/",
+    "basePath": "/api",
     "schemes": [
         "https"
     ],
