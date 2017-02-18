@@ -1,17 +1,12 @@
 <?php
 
-namespace SwagBag;
+namespace SwagBag\Traits;
 
 use Lib\Arr;
 
 trait JsonStruct
 {
     protected $structure = [];
-
-    function jsonSerialize()
-    {
-        return $this->structure;
-    }
 
     /**
      * @param string $key

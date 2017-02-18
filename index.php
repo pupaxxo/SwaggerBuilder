@@ -3,9 +3,14 @@
 use SwagBag\Components\Contact;
 use SwagBag\Components\Info;
 use SwagBag\Components\License;
+use SwagBag\Components\Operation;
+use SwagBag\Components\Parameter;
+use SwagBag\Components\Path;
+use SwagBag\Components\Response;
 use SwagBag\Components\Swagger;
 use SwagBag\Mime;
 use SwagBag\Scheme;
+use SwagBag\Verb;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -18,10 +23,12 @@ $contact = (new Contact())
     ->setEmail('support@example.org')
     ->setOther('billing', 'billing@example.org')
     ->setOther('technical', 'technical@example.org');
+
 $license = (new License('Example License'))
     ->setUrl('www.my.org/license')
     ->setOther('more-license-data', 'This is just an example.')
     ->setOther('extra-license-data', 'Really, this is all just for example.');
+
 $info = (new Info('Example', '0.1.0'))
     ->setDescription('My example.')
     ->setTermsOfService('Some terms')
@@ -31,14 +38,44 @@ $info = (new Info('Example', '0.1.0'))
 /**
  * Define Swagger Paths
  */
-$paths = [];
+
+// Home path
+$home = new Path('/', [
+    new Operation(Verb::GET, [
+        new Response(),
+    ]),
+]);
+
+// Users path
+$createUser = (new Operation(Verb::POST, [
+    new Response(200),
+    new Response(422),
+]))
+    ->setSummary('Persist a user.')
+    ->setDescription('Stores a user in a database.')
+    ->setOperationId('users.persist');
+
+$listUsers = (new Operation(Verb::GET, [
+    new Response(200),
+]))
+    ->addParameter(new Parameter('page'));
+
+$updateUser = (new Operation(Verb::PUT, [
+    new Response(422),
+]));
+
+$users = new Path('/users', [
+    $listUsers,
+    $createUser,
+    $updateUser,
+]);
 
 /**
  * Define Swagger
  */
-$swagger = (new Swagger('2.0', $info, $paths))
+$swagger = (new Swagger('2.0', $info, [$home, $users]))
     ->setHost('192.176.99.100')
-    ->setBasePath('/')
+    ->setBasePath('/api')
     ->addScheme(Scheme::HTTPS)
     ->addConsumedMime(Mime::JSON)
     ->addProducedMime(Mime::JSON);

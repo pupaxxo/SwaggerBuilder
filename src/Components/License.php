@@ -2,7 +2,7 @@
 
 namespace SwagBag\Components;
 
-use SwagBag\Patterned;
+use SwagBag\Traits\Patterned;
 
 class License extends Component
 {

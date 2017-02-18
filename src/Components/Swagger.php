@@ -2,22 +2,33 @@
 
 namespace SwagBag\Components;
 
-use SwagBag\Mime;
-use SwagBag\Scheme;
+use SwagBag\Traits\Mimes;
+use SwagBag\Traits\Schemes;
 
 class Swagger extends Component
 {
+    use Mimes, Schemes {
+        Mimes::set insteadof Schemes;
+        Mimes::append insteadof Schemes;
+    }
+
+    /**
+     * Swagger constructor.
+     * @param string $version
+     * @param Info $info
+     * @param Path[] $paths
+     */
     public function __construct(string $version, Info $info, array $paths = [])
     {
         $this
-            ->set('version', $version)
+            ->set('swagger', $version)
             ->set('info', $info);
         foreach ($paths as $path) {
             $this->addPath($path);
         }
     }
 
-    private function addPath(Path $path): Swagger
+    public function addPath(Path $path): Swagger
     {
         return $this->set("paths.{$path->getUri()}", $path);
     }
@@ -27,26 +38,11 @@ class Swagger extends Component
         return $this->set('host', $host);
     }
 
-    public function setBasePath(string $basePath = '/v1'): Swagger
+    public function setBasePath(string $basePath = '/api/v1'): Swagger
     {
         if (strpos($basePath, '/') !== 0) {
             $basePath = "/{$basePath}";
         }
         return $this->set('basePath', $basePath);
-    }
-
-    public function addScheme(string $scheme = Scheme::HTTP): Swagger
-    {
-        return $this->append('schemes', $scheme);
-    }
-
-    public function addConsumedMime(string $mime = Mime::JSON): Swagger
-    {
-        return $this->append('consumes', $mime);
-    }
-
-    public function addProducedMime(string $mime = Mime::JSON): Swagger
-    {
-        return $this->append('produces', $mime);
     }
 }
