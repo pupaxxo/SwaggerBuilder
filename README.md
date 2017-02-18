@@ -53,11 +53,19 @@ $createUser = (new Operation(Verb::POST, [
 $listUsers = (new Operation(Verb::GET, [
     new Response(200),
 ]))
-    ->addParameter(new Parameter('page'));
+    ->addParameter(new QueryParam('page'))
+    ->addParameter(
+        (new QueryParam('first_name', false, Type::ARRAY))
+            ->setEnumItems(['Huey', 'Dewey', 'Louie'])
+            ->setDescription('The name by which to filter users.')
+            ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
+    );
 
 $updateUser = (new Operation(Verb::PUT, [
-    new Response(422),
-]));
+    new Response(422, 'The client provided invalid user data.'),
+]))
+    ->addParameter(new BodyParam('first_name', true, new Schema()))
+    ->addParameter(new BodyParam('age', true, new Schema()));
 
 $users = new Path('/users', [
     $listUsers,
@@ -104,25 +112,49 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
         "/": {
             "get": {
                 "responses": {
-                    "200": []
+                    "200": {
+                        "description": "The response to this request."
+                    }
                 }
             }
         },
         "/users": {
             "get": {
                 "responses": {
-                    "200": []
+                    "200": {
+                        "description": "The response to this request."
+                    }
                 },
-                "parameters": {
-                    "page": [
-                        []
-                    ]
-                }
+                "parameters": [
+                    {
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "first_name",
+                        "required": false,
+                        "in": "query",
+                        "type": "array",
+                        "enum": [
+                            "Huey",
+                            "Dewey",
+                            "Louie"
+                        ],
+                        "description": "The name by which to filter users.",
+                        "x-deprecated-warning": "Deprecated in 0.0.3"
+                    }
+                ]
             },
             "post": {
                 "responses": {
-                    "200": [],
-                    "422": []
+                    "200": {
+                        "description": "The response to this request."
+                    },
+                    "422": {
+                        "description": "The response to this request."
+                    }
                 },
                 "summary": "Persist a user.",
                 "description": "Stores a user in a database.",
@@ -130,8 +162,24 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
             },
             "put": {
                 "responses": {
-                    "422": []
-                }
+                    "422": {
+                        "description": "The client provided invalid user data."
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "required": true,
+                        "in": "body",
+                        "schema": []
+                    },
+                    {
+                        "name": "age",
+                        "required": true,
+                        "in": "body",
+                        "schema": []
+                    }
+                ]
             }
         }
     },
