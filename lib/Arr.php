@@ -6,15 +6,20 @@ class Arr
 {
     public static function set(string $key, $value, array $container = []): array
     {
-        $keys = explode('.', $key);
-        $valueKey = array_pop($keys);
-        return static::delve(function (array &$end, array &$container) use ($valueKey, $value) {
-            $end[$valueKey] = $value;
-            return $container;
-        }, $keys, $container);
+        list($keys, $valueKey) = static::breakKey($key);
+        $end = &static::seekEnd($keys, $container);
+        $end[$valueKey] = $value;
+        return $container;
     }
 
-    private static function delve(callable $cb, array $keys = [], array $container = [])
+    private static function breakKey(string $key): array
+    {
+        $keys = explode('.', $key);
+        $valueKey = array_pop($keys);
+        return [$keys, $valueKey];
+    }
+
+    private static function &seekEnd(array $keys = [], array &$container = [])
     {
         $currentDepth = &$container;
 
@@ -25,20 +30,18 @@ class Arr
             }
         }
 
-        return $cb($currentDepth, $container);
+        return $currentDepth;
     }
 
     public static function append(string $key, $value, array $container = []): array
     {
-        $keys = explode('.', $key);
-        $valueKey = array_pop($keys);
-        return static::delve(function (&$end, &$container) use ($valueKey, $value) {
-            if (is_array($end[$valueKey] ?? null)) {
-                $end[$valueKey][] = $value;
-            } else {
-                $end[$valueKey] = [$value];
-            }
-            return $container;
-        }, $keys, $container);
+        list($keys, $valueKey) = static::breakKey($key);
+        $end = &static::seekEnd($keys, $container);
+        if (is_array($end[$valueKey] ?? null)) {
+            $end[$valueKey][] = $value;
+        } else {
+            $end[$valueKey] = [$value];
+        }
+        return $container;
     }
 }
