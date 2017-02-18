@@ -1,0 +1,16 @@
+{
+  "name": "samueldavis/swagger-builder",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Samuel Davis",
+      "email": "samueljakdavis@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Lib\\": "lib/"
+    }
+  },
+  "require": {}
+}
