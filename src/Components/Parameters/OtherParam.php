@@ -5,15 +5,14 @@ namespace SwagBag\Components\Parameters;
 use InvalidArgumentException;
 use SwagBag\Type;
 
-class OtherParam extends Parameter
+abstract class OtherParam extends Parameter
 {
     public function __construct(
         string $name = 'query',
         bool $required = false,
-        string $in = self::QUERY,
         string $type = Type::STRING
     ) {
-        parent::__construct($name, $required, $in);
+        parent::__construct($name, $required);
         $this->setType($type);
     }
 
@@ -33,7 +32,7 @@ class OtherParam extends Parameter
         if ($this->structure['type'] !== Type::ARRAY) {
             throw new InvalidArgumentException(sprintf(
                 "Parameter %s cannot have items because it is of type %s, not %s.",
-                $this->getName(),
+                $this->structure['name'],
                 $this->structure['type'],
                 Type::ARRAY
             ));
@@ -42,14 +41,14 @@ class OtherParam extends Parameter
 
     public function setCollectionFormat(string $format = CollectionFormat::CSV): OtherParam
     {
-        if ($format == CollectionFormat::MULTI && !in_array($this->structure['in'], [self::QUERY, self::FORM])) {
+        if ($format == CollectionFormat::MULTI && !in_array($this->structure['in'], [QueryParam::IN, FormParam::IN])) {
             throw new InvalidArgumentException(sprintf(
                 "Cannot set parameter %s format to %s because it is in the %s, not the %s or %s",
-                $this->getName(),
+                $this->structure['name'],
                 $format,
                 $this->structure['in'],
-                self::QUERY,
-                self::FORM
+                QueryParam::IN,
+                FormParam::IN
             ));
         }
         return $this->set('collectionFormat', $format);

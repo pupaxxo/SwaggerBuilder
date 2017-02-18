@@ -2,6 +2,7 @@
 
 namespace SwagBag\Components\Parameters;
 
+use LogicException;
 use SwagBag\Components\Component;
 use SwagBag\Traits\Patterned;
 
@@ -9,20 +10,20 @@ abstract class Parameter extends Component
 {
     use Patterned;
 
-    const PATH = 'path';
-    const QUERY = 'query';
-    const HEADER = 'header';
-    const BODY = 'body';
-    const FORM = 'formData';
+    const IN = '';
 
     private $name;
 
-    public function __construct(string $name = 'query', bool $required = false, string $in = self::QUERY)
+    public function __construct(string $name = 'query', bool $required = false)
     {
         $this->name = $name;
+        if (!static::IN) {
+            throw new LogicException("{$name} parameter missing 'IN' property.");
+        }
         $this
+            ->setName($name)
             ->setRequired($required)
-            ->setIn($in);
+            ->setIn(static::IN);
     }
 
     private function setIn(string $in): Parameter
@@ -33,6 +34,11 @@ abstract class Parameter extends Component
     private function setRequired(bool $required): Parameter
     {
         return $this->set('required', $required);
+    }
+
+    private function setName(string $name = 'filter'): Parameter
+    {
+        return $this->set('name', $name);
     }
 
     public function getName(): string

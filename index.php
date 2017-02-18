@@ -5,8 +5,8 @@ use SwagBag\Components\Info;
 use SwagBag\Components\License;
 use SwagBag\Components\Operation;
 use SwagBag\Components\Parameters\BodyParam;
-use SwagBag\Components\Parameters\OtherParam;
 use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Parameters\QueryParam;
 use SwagBag\Components\Path;
 use SwagBag\Components\Response;
 use SwagBag\Components\Schema;
@@ -62,9 +62,9 @@ $createUser = (new Operation(Verb::POST, [
 $listUsers = (new Operation(Verb::GET, [
     new Response(200),
 ]))
-    ->addParameter(new OtherParam('page'))
+    ->addParameter(new QueryParam('page'))
     ->addParameter(
-        (new OtherParam('first_name', false, Parameter::QUERY, Type::ARRAY))
+        (new QueryParam('first_name', false, Type::ARRAY))
             ->setEnumItems(['Huey', 'Dewey', 'Louie'])
             ->setDescription('The name by which to filter users.')
             ->setOther('deprecated-warning', 'Deprecated in 0.0.3')

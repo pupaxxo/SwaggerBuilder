@@ -6,9 +6,11 @@ use SwagBag\Components\Schema;
 
 class BodyParam extends Parameter
 {
+    const IN = 'body';
+
     public function __construct($name = 'query', $required = false, Schema $schema)
     {
-        parent::__construct($name, $required, static::BODY);
+        parent::__construct($name, $required);
         $this->setSchema($schema);
     }
 
