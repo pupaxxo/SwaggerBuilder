@@ -26,8 +26,8 @@ class Arr
         foreach ($keys as $key) {
             if (!is_array($currentDepth[$key] ?? null)) {
                 $currentDepth[$key] = [];
-                $currentDepth = &$currentDepth[$key];
             }
+            $currentDepth = &$currentDepth[$key];
         }
 
         return $currentDepth;
