@@ -5,7 +5,6 @@ use SwagBag\Components\Info;
 use SwagBag\Components\License;
 use SwagBag\Components\Operation;
 use SwagBag\Components\Parameters\BodyParam;
-use SwagBag\Components\Parameters\Parameter;
 use SwagBag\Components\Parameters\QueryParam;
 use SwagBag\Components\Path;
 use SwagBag\Components\Response;
@@ -71,7 +70,7 @@ $listUsers = (new Operation(Verb::GET, [
     );
 
 $updateUser = (new Operation(Verb::PUT, [
-    new Response(422),
+    new Response(422, 'The client provided invalid user data.'),
 ]))
     ->addParameter(new BodyParam('first_name', true, new Schema()))
     ->addParameter(new BodyParam('age', true, new Schema()));
