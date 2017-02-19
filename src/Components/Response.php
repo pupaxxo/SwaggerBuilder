@@ -34,6 +34,6 @@ class Response extends Component
 
     public function addExample(Example $example): Response
     {
-        return $this->append('examples', $example);
+        return $this->append("examples.{$example->getMime()}", $example);
     }
 }

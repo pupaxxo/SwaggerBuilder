@@ -64,7 +64,15 @@ $listUsers = (new Operation(Verb::GET, [
     );
 
 $updateUser = (new Operation(Verb::PUT, [
-    new Response(422, 'The client provided invalid user data.'),
+    (new Response(422, 'The client provided invalid user data.'))
+        ->addExample(new Example(Mime::JSON, [
+            'type' => 'user',
+            'id' => 1,
+            'properties' => [
+                'first_name' => 'Arya',
+                'age' => 9,
+            ],
+        ])),
 ]))
     ->addParameter(new BodyParam('first_name', true, new Schema()))
     ->addParameter(new BodyParam('age', true, new Schema()));
@@ -170,7 +178,19 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
             "put": {
                 "responses": {
                     "422": {
-                        "description": "The client provided invalid user data."
+                        "description": "The client provided invalid user data.",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "type": "user",
+                                    "id": 1,
+                                    "properties": {
+                                        "first_name": "Arya",
+                                        "age": 9
+                                    }
+                                }
+                            ]
+                        }
                     }
                 },
                 "parameters": [

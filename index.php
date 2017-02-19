@@ -1,6 +1,7 @@
 <?php
 
 use SwagBag\Components\Contact;
+use SwagBag\Components\Example;
 use SwagBag\Components\Header;
 use SwagBag\Components\Info;
 use SwagBag\Components\License;
@@ -73,7 +74,15 @@ $listUsers = (new Operation(Verb::GET, [
     );
 
 $updateUser = (new Operation(Verb::PUT, [
-    new Response(422, 'The client provided invalid user data.'),
+    (new Response(422, 'The client provided invalid user data.'))
+        ->addExample(new Example(Mime::JSON, [
+            'type' => 'user',
+            'id' => 1,
+            'properties' => [
+                'first_name' => 'Arya',
+                'age' => 9,
+            ],
+        ])),
 ]))
     ->addParameter(new BodyParam('first_name', true, new Schema()))
     ->addParameter(new BodyParam('age', true, new Schema()));
