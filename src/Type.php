@@ -15,5 +15,4 @@ class Type
     const DATE = 'date';
     const DATETIME = 'datetime';
     const PASSWORD = 'password';
-    const ARRAY = 'array';
 }

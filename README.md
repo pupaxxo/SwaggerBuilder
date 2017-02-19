@@ -55,8 +55,7 @@ $listUsers = (new Operation(Verb::GET, [
 ]))
     ->addParameter(new QueryParam('page'))
     ->addParameter(
-        (new QueryParam('first_name', false, Type::ARRAY))
-            ->setEnumItems(['Huey', 'Dewey', 'Louie'])
+        (new QueryParam('first_name', false, Type::STRING))
             ->setDescription('The name by which to filter users.')
             ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
     );
@@ -136,12 +135,7 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
                         "name": "first_name",
                         "required": false,
                         "in": "query",
-                        "type": "array",
-                        "enum": [
-                            "Huey",
-                            "Dewey",
-                            "Louie"
-                        ],
+                        "type": "string",
                         "description": "The name by which to filter users.",
                         "x-deprecated-warning": "Deprecated in 0.0.3"
                     }

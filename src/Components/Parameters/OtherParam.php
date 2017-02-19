@@ -21,24 +21,6 @@ abstract class OtherParam extends Parameter
         return $this->set('type', $type);
     }
 
-    public function setItems(Items $items): OtherParam
-    {
-        $this->assertIsArray();
-        $this->set('items', $items);
-    }
-
-    private function assertIsArray()
-    {
-        if ($this->structure['type'] !== Type::ARRAY) {
-            throw new InvalidArgumentException(sprintf(
-                "Parameter %s cannot have items because it is of type %s, not %s.",
-                $this->structure['name'],
-                $this->structure['type'],
-                Type::ARRAY
-            ));
-        }
-    }
-
     public function setCollectionFormat(string $format = CollectionFormat::CSV): OtherParam
     {
         if ($format == CollectionFormat::MULTI && !in_array($this->structure['in'], [QueryParam::IN, FormParam::IN])) {
@@ -104,30 +86,6 @@ abstract class OtherParam extends Parameter
     public function setPattern(string $regex = '/[a-zA-Z0-9]+/'): OtherParam
     {
         return $this->set('pattern', $regex);
-    }
-
-    public function setMaxItems(int $maxItems = 100): OtherParam
-    {
-        $this->assertIsArray();
-        return $this->set('maxItems', $maxItems);
-    }
-
-    public function setMinItems(int $minItems = 0): OtherParam
-    {
-        $this->assertIsArray();
-        return $this->set('minItems', $minItems);
-    }
-
-    public function setUniqueItems(bool $unique = false): OtherParam
-    {
-        $this->assertIsArray();
-        return $this->set('uniqueItems', $unique);
-    }
-
-    public function setEnumItems(array $enum = []): OtherParam
-    {
-        $this->assertIsArray();
-        return $this->set('enum', $enum);
     }
 
     /**
