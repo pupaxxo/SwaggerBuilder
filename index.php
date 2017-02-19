@@ -1,6 +1,7 @@
 <?php
 
 use SwagBag\Components\Contact;
+use SwagBag\Components\Header;
 use SwagBag\Components\Info;
 use SwagBag\Components\License;
 use SwagBag\Components\Operation;
@@ -59,13 +60,16 @@ $createUser = (new Operation(Verb::POST, [
     ->setOperationId('users.persist');
 
 $listUsers = (new Operation(Verb::GET, [
-    new Response(200),
+    (new Response(200))
+        ->addHeader((new Header('X-Rate-Limit-Remaining', Type::INTEGER))
+            ->setDescription('The number of remaining requests in the current period.'))
+        ->addHeader((new Header('X-Rate-Limit-Reset', Type::INTEGER))
+            ->setDescription('The number of seconds left in the current period.')),
 ]))
     ->addParameter(new QueryParam('page'))
-    ->addParameter(
-        (new QueryParam('first_name', false, Type::STRING))
-            ->setDescription('The name by which to filter users.')
-            ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
+    ->addParameter((new QueryParam('first_name', false, Type::STRING))
+        ->setDescription('The name by which to filter users.')
+        ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
     );
 
 $updateUser = (new Operation(Verb::PUT, [

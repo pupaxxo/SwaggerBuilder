@@ -29,7 +29,7 @@ class Response extends Component
 
     public function addHeader(Header $header): Response
     {
-        return $this->append('headers', $header);
+        return $this->set("headers.{$header->getName()}", $header);
     }
 
     public function addExample(Example $example): Response

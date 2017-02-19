@@ -51,13 +51,16 @@ $createUser = (new Operation(Verb::POST, [
     ->setOperationId('users.persist');
 
 $listUsers = (new Operation(Verb::GET, [
-    new Response(200),
+    (new Response(200))
+        ->addHeader((new Header('X-Rate-Limit-Remaining', Type::INTEGER))
+            ->setDescription('The number of remaining requests in the current period.'))
+        ->addHeader((new Header('X-Rate-Limit-Reset', Type::INTEGER))
+            ->setDescription('The number of seconds left in the current period.')),
 ]))
     ->addParameter(new QueryParam('page'))
-    ->addParameter(
-        (new QueryParam('first_name', false, Type::STRING))
-            ->setDescription('The name by which to filter users.')
-            ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
+    ->addParameter((new QueryParam('first_name', false, Type::STRING))
+        ->setDescription('The name by which to filter users.')
+        ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
     );
 
 $updateUser = (new Operation(Verb::PUT, [
@@ -121,7 +124,17 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
             "get": {
                 "responses": {
                     "200": {
-                        "description": "The response to this request."
+                        "description": "The response to this request.",
+                        "headers": {
+                            "X-Rate-Limit-Remaining": {
+                                "type": "integer",
+                                "description": "The number of remaining requests in the current period."
+                            },
+                            "X-Rate-Limit-Reset": {
+                                "type": "integer",
+                                "description": "The number of seconds left in the current period."
+                            }
+                        }
                     }
                 },
                 "parameters": [
