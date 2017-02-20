@@ -2,45 +2,41 @@
 
 namespace Tests\Components;
 
-use InvalidArgumentException;
 use SwagBag\Components\Info;
 use SwagBag\Components\Path;
 use SwagBag\Components\Swagger;
 use SwagBag\Constants\Mime;
 use SwagBag\Constants\Scheme;
+use Tests\ArrayAssertions;
 use Tests\TestCase;
-use TypeError;
 
 class SwaggerTest extends TestCase
 {
+    use ArrayAssertions;
+
     public function testItRequiresAtLeastOnePath()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('At least one path must be specified.');
+        $this->itRequiresAtLeastOneThingTest(Swagger::class, Path::class);
 
         new Swagger('2.0', new Info(), []);
     }
 
     public function testItRequiresPathObjectsSpecifically()
     {
-        $this->expectException(TypeError::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument 1 passed to %s::addPath() must be an instance of %s, %s given',
-            Swagger::class,
-            Path::class,
-            'string'
-        ));
+        $given = 'foobar';
+        $this->itRequiresThingObjectsSpecificallyTest(Swagger::class, 'addPath', Path::class, gettype($given));
 
-        new Swagger('2.0', new Info(), ['foobar']);
+        new Swagger('2.0', new Info(), [$given]);
     }
 
     public function testItCompilesDefaults()
     {
-        $path = new Path();
+        $uri = '/pets';
+
         $expected = [
             'swagger' => '2.0',
             'info' => new Info(),
-            'paths' => [$path->getUri() => $path],
+            'paths' => [$uri => $this->mockPath($uri)],
         ];
 
         $swagger = new Swagger($expected['swagger'], $expected['info'], $expected['paths']);
@@ -48,9 +44,21 @@ class SwaggerTest extends TestCase
         self::assertEquals($expected, (array)$swagger);
     }
 
+    private function mockPath(string $uri): Path
+    {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Path $path */
+        $path = $this->createMock(Path::class);
+        $path
+            ->method('getUri')
+            ->willReturn($uri);
+
+        return $path;
+    }
+
     public function testItCompilesEverything()
     {
-        $path = new Path();
+        $uri = '/pets';
+
         $expected = [
             'swagger' => '2.0',
             'info' => new Info(),
@@ -59,7 +67,7 @@ class SwaggerTest extends TestCase
             'produces' => [Mime::JSON],
             'consumes' => [Mime::JSON],
             'schemes' => [Scheme::HTTP],
-            'paths' => [$path->getUri() => $path],
+            'paths' => [$uri => $this->mockPath($uri)],
         ];
 
         $swagger = (new Swagger($expected['swagger'], $expected['info'], $expected['paths']))

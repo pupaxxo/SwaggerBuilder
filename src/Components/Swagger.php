@@ -18,8 +18,12 @@ class Swagger extends Component
      */
     public function __construct(string $version, Info $info, array $paths = [])
     {
-        if (!$paths) {
-            throw new InvalidArgumentException('At least one path must be specified.');
+        if (empty($paths)) {
+            throw new InvalidArgumentException(sprintf(
+                '%s expects at least one %s be provided.',
+                static::class,
+                Path::class
+            ));
         }
         foreach ($paths as $path) {
             $this->addPath($path);

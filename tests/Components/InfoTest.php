@@ -28,8 +28,8 @@ class InfoTest extends TestCase
             'version' => '1.0.0',
             'description' => 'This is a sample server Petstore server.',
             'termsOfService' => 'http://helloreverb.com/terms/',
-            'contact' => new Contact(),
-            'license' => new License(),
+            'contact' => $this->createMock(Contact::class),
+            'license' => $this->createMock(License::class),
         ];
 
         $info = (new Info($expected['title'], $expected['version']))
