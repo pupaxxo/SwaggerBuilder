@@ -17,12 +17,12 @@ class SwaggerSpec extends ObjectBehavior
         $this->beConstructedWith('2.0', $info, [$path]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(Swagger::class);
     }
 
-    function it_requires_at_least_one_path(Info $info)
+    public function it_requires_at_least_one_path(Info $info)
     {
         $this->beConstructedWith('2.0', $info, []);
         $this
@@ -30,7 +30,7 @@ class SwaggerSpec extends ObjectBehavior
             ->duringInstantiation();
     }
 
-    function it_requires_path_objects_specifically(Info $info)
+    public function it_requires_path_objects_specifically(Info $info)
     {
         $this->beConstructedWith('2.0', $info, ['foobar']);
         $this
@@ -45,7 +45,7 @@ class SwaggerSpec extends ObjectBehavior
         $this->shouldHaveKeyWithValue('info', $info);
     }
 
-    function it_stores_its_version()
+    public function it_stores_its_version()
     {
         $this->shouldHaveKeyWithValue('swagger', '2.0');
     }
