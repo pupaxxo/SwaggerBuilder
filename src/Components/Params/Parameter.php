@@ -3,7 +3,7 @@
 namespace SwagBag\Components\Params;
 
 use SwagBag\Components\Component;
-use SwagBag\ParamType;
+use SwagBag\Constants\ParamType;
 use SwagBag\Traits\Items;
 
 class Parameter extends Component

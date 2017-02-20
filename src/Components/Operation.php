@@ -2,10 +2,10 @@
 
 namespace SwagBag\Components;
 
+use SwagBag\Constants\Verb;
 use SwagBag\Traits\Mimes;
 use SwagBag\Traits\Parameters;
 use SwagBag\Traits\Schemes;
-use SwagBag\Verb;
 
 class Operation extends Component
 {

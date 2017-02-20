@@ -2,7 +2,7 @@
 
 namespace SwagBag\Components;
 
-use SwagBag\Mime;
+use SwagBag\Constants\Mime;
 
 class Example extends Component
 {

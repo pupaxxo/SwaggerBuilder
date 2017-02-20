@@ -2,7 +2,7 @@
 
 namespace SwagBag\Components;
 
-use SwagBag\Type;
+use SwagBag\Constants\Type;
 
 class Header extends Component
 {

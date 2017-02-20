@@ -2,7 +2,7 @@
 
 namespace SwagBag\Traits;
 
-use SwagBag\Scheme;
+use SwagBag\Constants\Scheme;
 
 trait Schemes
 {

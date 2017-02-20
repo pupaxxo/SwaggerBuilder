@@ -2,8 +2,8 @@
 
 namespace SwagBag\Components;
 
+use SwagBag\Constants\Type;
 use SwagBag\Traits\Items as ItemsTrait;
-use SwagBag\Type;
 
 class Items extends Component
 {

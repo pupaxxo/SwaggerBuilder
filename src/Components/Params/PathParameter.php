@@ -2,7 +2,7 @@
 
 namespace SwagBag\Components\Params;
 
-use SwagBag\ParamType;
+use SwagBag\Constants\ParamType;
 
 class PathParameter extends Parameter
 {

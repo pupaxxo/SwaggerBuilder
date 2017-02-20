@@ -1,6 +1,6 @@
 <?php
 
-namespace SwagBag;
+namespace SwagBag\Constants;
 
 class Type
 {

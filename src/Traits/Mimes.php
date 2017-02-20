@@ -2,7 +2,7 @@
 
 namespace SwagBag\Traits;
 
-use SwagBag\Mime;
+use SwagBag\Constants\Mime;
 
 trait Mimes
 {
