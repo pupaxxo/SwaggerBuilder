@@ -36,50 +36,45 @@ class SwaggerTest extends TestCase
 
     public function testItCompilesDefaults()
     {
-        $version = '2.0';
-        $info = new Info();
         $path = new Path();
-        $swagger = new Swagger($version, $info, [$path]);
+        $expected = [
+            'swagger' => '2.0',
+            'info' => new Info(),
+            'paths' => [$path->getUri() => $path],
+        ];
 
-        self::assertEquals([
-            'swagger' => $version,
-            'info' => $info,
-            'paths' => ['/' => $path],
-        ], (array)$swagger);
+        $swagger = new Swagger($expected['swagger'], $expected['info'], $expected['paths']);
+
+        self::assertEquals($expected, (array)$swagger);
     }
 
     public function testItCompilesEverything()
     {
-        $version = '2.0';
-        $info = new Info();
-        $host = 'localhost';
-        $basePath = '/test';
-        $schemes = [Scheme::HTTPS];
-        $consumes = [Mime::JSON];
-        $produces = [Mime::JSON];
         $path = new Path();
-        $swagger = (new Swagger($version, $info, [$path]))
-            ->setHost($host)
-            ->setBasePath($basePath);
-        foreach ($consumes as $mime) {
+        $expected = [
+            'swagger' => '2.0',
+            'info' => new Info(),
+            'host' => 'petstore.swagger.io',
+            'basePath' => '/v2',
+            'produces' => [Mime::JSON],
+            'consumes' => [Mime::JSON],
+            'schemes' => [Scheme::HTTP],
+            'paths' => [$path->getUri() => $path],
+        ];
+
+        $swagger = (new Swagger($expected['swagger'], $expected['info'], $expected['paths']))
+            ->setHost($expected['host'])
+            ->setBasePath($expected['basePath']);
+        foreach ($expected['consumes'] as $mime) {
             $swagger->addConsumedMime($mime);
         }
-        foreach ($produces as $mime) {
+        foreach ($expected['produces'] as $mime) {
             $swagger->addProducedMime($mime);
         }
-        foreach ($schemes as $scheme) {
+        foreach ($expected['schemes'] as $scheme) {
             $swagger->addScheme($scheme);
         }
 
-        self::assertEquals([
-            'swagger' => $version,
-            'info' => $info,
-            'host' => $host,
-            'basePath' => $basePath,
-            'produces' => $produces,
-            'consumes' => $consumes,
-            'schemes' => $schemes,
-            'paths' => [$path->getUri() => $path],
-        ], (array)$swagger);
+        self::assertEquals($expected, (array)$swagger);
     }
 }
