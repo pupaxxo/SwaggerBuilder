@@ -10,11 +10,11 @@
   "autoload": {
     "psr-4": {
       "SwagBag\\": "src/",
-      "Lib\\": "lib/"
+      "Tests\\": "tests/"
     }
   },
   "require": {},
   "require-dev": {
-    "phpspec/phpspec": "^3.2"
+    "phpunit/phpunit": "^6.0"
   }
 }

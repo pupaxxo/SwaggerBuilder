@@ -29,7 +29,7 @@ class Swagger extends Component
             ->set('info', $info);
     }
 
-    public function addPath(Path $path): Swagger
+    private function addPath(Path $path): Swagger
     {
         return $this->set("paths.{$path->getUri()}", $path);
     }
