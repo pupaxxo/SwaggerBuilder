@@ -66,4 +66,9 @@ class Operation extends Component
     {
         return $this->set('deprecated', true);
     }
+
+    public function addConsumedMime(string $mime): Operation
+    {
+        return $this->add('consumes', $mime);
+    }
 }
