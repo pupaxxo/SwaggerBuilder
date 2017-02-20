@@ -10,6 +10,6 @@ trait Schemes
 
     public function addScheme(string $scheme = Scheme::HTTP)
     {
-        return $this->append('schemes', $scheme);
+        return $this->add('schemes', $scheme);
     }
 }

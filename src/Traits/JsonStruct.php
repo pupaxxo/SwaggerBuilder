@@ -13,7 +13,7 @@ trait JsonStruct
      * @param $value
      * @return static
      */
-    protected function append(string $key, $value)
+    protected function add(string $key, $value)
     {
         $this->structure = Arr::append($key, $value, $this->structure);
         return $this;

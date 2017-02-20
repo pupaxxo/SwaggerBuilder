@@ -10,11 +10,11 @@ trait Mimes
 
     public function addConsumedMime(string $mime = Mime::JSON)
     {
-        return $this->append('consumes', $mime);
+        return $this->add('consumes', $mime);
     }
 
     public function addProducedMime(string $mime = Mime::JSON)
     {
-        return $this->append('produces', $mime);
+        return $this->add('produces', $mime);
     }
 }

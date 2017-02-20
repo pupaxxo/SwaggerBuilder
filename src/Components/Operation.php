@@ -12,8 +12,8 @@ class Operation extends Component
     use Mimes, Parameters, Schemes {
         Mimes::set insteadof Parameters;
         Mimes::set insteadof Schemes;
-        Mimes::append insteadof Parameters;
-        Mimes::append insteadof Schemes;
+        Mimes::add insteadof Parameters;
+        Mimes::add insteadof Schemes;
     }
 
     private static $IDS = [];

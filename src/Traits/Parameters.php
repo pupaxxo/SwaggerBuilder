@@ -10,6 +10,6 @@ trait Parameters
 
     public function addParameter(Parameter $parameter)
     {
-        return $this->append("parameters", $parameter);
+        return $this->add("parameters", $parameter);
     }
 }

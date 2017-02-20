@@ -9,7 +9,7 @@ class Swagger extends Component
 {
     use Mimes, Schemes {
         Mimes::set insteadof Schemes;
-        Mimes::append insteadof Schemes;
+        Mimes::add insteadof Schemes;
     }
 
     /**
