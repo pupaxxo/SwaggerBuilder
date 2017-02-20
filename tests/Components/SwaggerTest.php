@@ -34,14 +34,14 @@ class SwaggerTest extends TestCase
         $uri = '/pets';
 
         $expected = [
-            'swagger' => '2.0',
-            'info' => new Info(),
             'paths' => [$uri => $this->mockPath($uri)],
+            'swagger' => '2.0',
+            'info' => $this->createMock(Info::class),
         ];
 
         $swagger = new Swagger($expected['swagger'], $expected['info'], $expected['paths']);
 
-        self::assertEquals($expected, (array)$swagger);
+        static::assertComponentStructure($expected, $swagger);
     }
 
     private function mockPath(string $uri): Path
@@ -60,14 +60,14 @@ class SwaggerTest extends TestCase
         $uri = '/pets';
 
         $expected = [
+            'paths' => [$uri => $this->mockPath($uri)],
             'swagger' => '2.0',
-            'info' => new Info(),
+            'info' => $this->createMock(Info::class),
             'host' => 'petstore.swagger.io',
             'basePath' => '/v2',
-            'produces' => [Mime::JSON],
             'consumes' => [Mime::JSON],
+            'produces' => [Mime::JSON],
             'schemes' => [Scheme::HTTP],
-            'paths' => [$uri => $this->mockPath($uri)],
         ];
 
         $swagger = (new Swagger($expected['swagger'], $expected['info'], $expected['paths']))
@@ -83,6 +83,6 @@ class SwaggerTest extends TestCase
             $swagger->addScheme($scheme);
         }
 
-        self::assertEquals($expected, (array)$swagger);
+        static::assertComponentStructure($expected, $swagger);
     }
 }

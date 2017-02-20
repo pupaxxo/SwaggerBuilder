@@ -15,7 +15,7 @@ class LicenseTest extends TestCase
 
         $license = new License($expected['name']);
 
-        self::assertEquals($expected, (array)$license);
+        static::assertComponentStructure($expected, $license);
     }
 
     public function testItCompilesEverything()
@@ -30,6 +30,6 @@ class LicenseTest extends TestCase
             ->setUrl($expected['url'])
             ->setOther('auxiliary', $expected['x-auxiliary']);
 
-        self::assertEquals($expected, (array)$license);
+        static::assertComponentStructure($expected, $license);
     }
 }

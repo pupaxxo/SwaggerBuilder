@@ -38,7 +38,7 @@ class PathTest extends TestCase
 
         $path = new Path($uri, $operations);
 
-        self::assertEquals($operations, (array)$path);
+        static::assertComponentStructure($operations, $path);
     }
 
     private function mockOperation(string $method = Verb::GET): Operation
@@ -62,7 +62,7 @@ class PathTest extends TestCase
 
         $path = new Path($uri, $operations);
 
-        self::assertEquals($uri, $path->getUri());
+        static::assertEquals($uri, $path->getUri());
     }
 
     public function testItCompilesEverything()
@@ -83,7 +83,7 @@ class PathTest extends TestCase
             $path->addParameter($parameter);
         }
 
-        self::assertEquals($expected, (array)$path);
+        static::assertComponentStructure($expected, $path);
     }
 
     private function mockParameter(): Parameter

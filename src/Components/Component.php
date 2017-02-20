@@ -2,14 +2,21 @@
 
 namespace SwagBag\Components;
 
-use ArrayObject;
+use JsonSerializable;
 
-class Component extends ArrayObject
+class Component implements JsonSerializable
 {
+    private $structure = [];
+
+    function jsonSerialize()
+    {
+        return $this->structure;
+    }
+
     protected function add(string $key, $value): Component
     {
         $keys = explode('.', $key);
-        $iterator = &$this;
+        $iterator = &$this->structure;
         foreach ($keys as $key) {
             if (!is_array($iterator[$key] ?? null)) {
                 $iterator[$key] = [];
@@ -24,7 +31,7 @@ class Component extends ArrayObject
     {
         $keys = explode('.', $key);
         $valueKey = array_pop($keys);
-        $iterator = &$this;
+        $iterator = &$this->structure;
         foreach ($keys as $key) {
             if (!is_array($iterator[$key] ?? null)) {
                 $iterator[$key] = [];

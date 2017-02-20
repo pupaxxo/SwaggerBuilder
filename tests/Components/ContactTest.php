@@ -13,7 +13,7 @@ class ContactTest extends TestCase
 
         $contact = new Contact();
 
-        self::assertEquals($expected, (array)$contact);
+        static::assertComponentStructure($expected, $contact);
     }
 
     public function testItCompilesEverything()
@@ -31,6 +31,6 @@ class ContactTest extends TestCase
             ->setEmail($expected['email'])
             ->setOther('auxiliary', $expected['x-auxiliary']);
 
-        self::assertEquals($expected, (array)$contact);
+        static::assertComponentStructure($expected, $contact);
     }
 }

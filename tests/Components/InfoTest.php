@@ -18,7 +18,7 @@ class InfoTest extends TestCase
 
         $info = new Info($expected['title'], $expected['version']);
 
-        self::assertEquals($expected, (array)$info);
+        static::assertComponentStructure($expected, $info);
     }
 
     public function testItCompilesEverything()
@@ -38,6 +38,6 @@ class InfoTest extends TestCase
             ->setContact($expected['contact'])
             ->setLicense($expected['license']);
 
-        self::assertEquals($expected, (array)$info);
+        static::assertComponentStructure($expected, $info);
     }
 }
