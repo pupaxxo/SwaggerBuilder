@@ -2,9 +2,9 @@
 
 namespace SwagBag\Components;
 
-use InvalidArgumentException;
 use SwagBag\Traits\Mimes;
 use SwagBag\Traits\Schemes;
+use SwagBag\Validator;
 
 class Swagger extends Component
 {
@@ -18,13 +18,7 @@ class Swagger extends Component
      */
     public function __construct(string $version, Info $info, array $paths = [])
     {
-        if (empty($paths)) {
-            throw new InvalidArgumentException(sprintf(
-                '%s expects at least one %s be provided.',
-                static::class,
-                Path::class
-            ));
-        }
+        Validator::assertNotEmpty($paths, static::class, Path::class);
         foreach ($paths as $path) {
             $this->addPath($path);
         }

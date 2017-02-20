@@ -6,6 +6,7 @@ use SwagBag\Constants\Verb;
 use SwagBag\Traits\Mimes;
 use SwagBag\Traits\Parameters;
 use SwagBag\Traits\Schemes;
+use SwagBag\Validator;
 
 class Operation extends Component
 {
@@ -22,6 +23,7 @@ class Operation extends Component
      */
     public function __construct(string $method = Verb::GET, array $responses = [])
     {
+        Validator::assertNotEmpty($responses, static::class, Response::class);
         $this->method = $method;
         foreach ($responses as $response) {
             $this->addResponse($response);

@@ -28,9 +28,9 @@ class PathTest extends TestCase
         new Path('/pets', [$given]);
     }
 
-    public function testItCompilesDefaults()
+    public function testItStoresItsUri()
     {
-        $method = Verb::GET;
+        $method = Verb::POST;
         $uri = '/pets';
         $operations = [
             $method => $this->mockOperation($method),
@@ -38,7 +38,7 @@ class PathTest extends TestCase
 
         $path = new Path($uri, $operations);
 
-        static::assertComponentStructure($operations, $path);
+        static::assertEquals($uri, $path->getUri());
     }
 
     private function mockOperation(string $method = Verb::GET): Operation
@@ -52,9 +52,9 @@ class PathTest extends TestCase
         return $operation;
     }
 
-    public function testItStoresItsUri()
+    public function testItCompilesDefaults()
     {
-        $method = Verb::GET;
+        $method = Verb::POST;
         $uri = '/pets';
         $operations = [
             $method => $this->mockOperation($method),
@@ -62,12 +62,12 @@ class PathTest extends TestCase
 
         $path = new Path($uri, $operations);
 
-        static::assertEquals($uri, $path->getUri());
+        static::assertComponentStructure($operations, $path);
     }
 
     public function testItCompilesEverything()
     {
-        $method = Verb::GET;
+        $method = Verb::POST;
         $uri = '/pets';
         $operations = [
             $method => $this->mockOperation($method),

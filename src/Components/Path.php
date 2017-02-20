@@ -2,8 +2,8 @@
 
 namespace SwagBag\Components;
 
-use InvalidArgumentException;
 use SwagBag\Traits\Parameters;
+use SwagBag\Validator;
 
 class Path extends Component
 {
@@ -13,13 +13,7 @@ class Path extends Component
 
     public function __construct(string $uri = '/', array $operations = [])
     {
-        if (empty($operations)) {
-            throw new InvalidArgumentException(sprintf(
-                '%s expects at least one %s be provided.',
-                static::class,
-                Operation::class
-            ));
-        }
+        Validator::assertNotEmpty($operations, static::class, Operation::class);
         foreach ($operations as $operation) {
             $this->setOperation($operation);
         }
