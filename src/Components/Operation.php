@@ -2,6 +2,7 @@
 
 namespace SwagBag\Components;
 
+use InvalidArgumentException;
 use SwagBag\Constants\Verb;
 use SwagBag\Traits\Mimes;
 use SwagBag\Traits\Parameters;
@@ -53,7 +54,7 @@ class Operation extends Component
     public function setOperationId(string $id): Operation
     {
         if (($i = array_search($id, static::$IDS)) !== false) {
-            throw new \InvalidArgumentException("Given operation id '{$id}' is already registered as the {$i}th operation.");
+            throw new InvalidArgumentException("Given operation id '{$id}' is already registered as the {$i}th operation.");
         }
         static::$IDS[] = $id;
         return $this->set('operationId', $id);
@@ -62,10 +63,5 @@ class Operation extends Component
     public function setDeprecated(): Operation
     {
         return $this->set('deprecated', true);
-    }
-
-    public function addConsumedMime(string $mime): Operation
-    {
-        return $this->add('consumes', $mime);
     }
 }

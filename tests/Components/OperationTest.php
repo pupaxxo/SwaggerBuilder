@@ -2,10 +2,12 @@
 
 namespace Tests\Components;
 
+use InvalidArgumentException;
 use SwagBag\Components\Operation;
 use SwagBag\Components\Params\Parameter;
 use SwagBag\Components\Response;
 use SwagBag\Constants\Mime;
+use SwagBag\Constants\Scheme;
 use SwagBag\Constants\Verb;
 use Tests\ArrayAssertions;
 use Tests\TestCase;
@@ -58,6 +60,20 @@ class OperationTest extends TestCase
         return $response;
     }
 
+    public function testItValidatesIdsAreUnique()
+    {
+        $i = 1;
+        $id = 'bar';
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Given operation id '{$id}' is already registered as the {$i}th operation.");
+
+        (new Operation(Verb::GET, [$this->mockResponse()]))->setOperationId('foo');
+        (new Operation(Verb::PUT, [$this->mockResponse()]))->setOperationId($id);
+        (new Operation(Verb::POST, [$this->mockResponse()]))->setOperationId('fiz');
+        (new Operation(Verb::DELETE, [$this->mockResponse()]))->setOperationId($id);
+    }
+
     public function testItCompilesDefaults()
     {
         $status = 200;
@@ -81,6 +97,7 @@ class OperationTest extends TestCase
             'summary' => 'Add a new pet to the store',
             'description' => 'Store some pet data in a database somewhere.',
             'operationId' => 'addPet',
+            'deprecated' => true,
             'consumes' => $consumes,
             'produces' => $produces,
             'parameters' => [
@@ -89,12 +106,16 @@ class OperationTest extends TestCase
             'responses' => [
                 $status => $this->mockResponse($status),
             ],
+            'schemes' => [
+                Scheme::HTTPS,
+            ],
         ];
 
         $operation = (new Operation(Verb::POST, $expected['responses']))
             ->setSummary($expected['summary'])
             ->setDescription($expected['description'])
-            ->setOperationId($expected['operationId']);
+            ->setOperationId($expected['operationId'])
+            ->setDeprecated();
         foreach ($expected['consumes'] as $mime) {
             $operation->addConsumedMime($mime);
         }
@@ -103,6 +124,9 @@ class OperationTest extends TestCase
         }
         foreach ($expected['parameters'] as $parameter) {
             $operation->addParameter($parameter);
+        }
+        foreach ($expected['schemes'] as $scheme) {
+            $operation->addScheme($scheme);
         }
 
         static::assertComponentStructure($expected, $operation);
