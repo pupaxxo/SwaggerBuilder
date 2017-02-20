@@ -9,84 +9,60 @@ Type hinting all over the place!
 
 ###Example
 ```php
-/**
- * Define Swagger Info
- */
-$contact = (new Contact())
-    ->setName('Example Org')
-    ->setUrl('www.example.org')
-    ->setEmail('support@example.org')
-    ->setOther('billing', 'billing@example.org')
-    ->setOther('technical', 'technical@example.org');
-
-$license = (new License('Example License'))
-    ->setUrl('www.my.org/license')
-    ->setOther('more-license-data', 'This is just an example.')
-    ->setOther('extra-license-data', 'Really, this is all just for example.');
-
 $info = (new Info('Example', '0.1.0'))
     ->setDescription('My example.')
     ->setTermsOfService('Some terms')
-    ->setContact($contact)
-    ->setLicense($license);
+    ->setContact((new Contact())
+        ->setName('Example Org')
+        ->setUrl('www.example.org')
+        ->setEmail('support@example.org')
+        ->setOther('billing', 'billing@example.org')
+        ->setOther('technical', 'technical@example.org'))
+    ->setLicense((new License('Example License'))
+        ->setUrl('www.my.org/license')
+        ->setOther('more-license-data', 'This is just an example.')
+        ->setOther('extra-license-data', 'Really, this is all just for example.'));
 
-/**
- * Define Swagger Paths
- */
-
-// Home path
-$home = new Path('/', [
-    new Operation(Verb::GET, [
-        new Response(),
-    ]),
-]);
-
-// Users path
-$createUser = (new Operation(Verb::POST, [
-    new Response(200),
-    new Response(422),
-]))
-    ->setSummary('Persist a user.')
-    ->setDescription('Stores a user in a database.')
-    ->setOperationId('users.persist');
-
-$listUsers = (new Operation(Verb::GET, [
-    (new Response(200))
-        ->addHeader((new Header('X-Rate-Limit-Remaining', Type::INTEGER))
-            ->setDescription('The number of remaining requests in the current period.'))
-        ->addHeader((new Header('X-Rate-Limit-Reset', Type::INTEGER))
-            ->setDescription('The number of seconds left in the current period.')),
-]))
-    ->addParameter(new QueryParam('page'))
-    ->addParameter((new QueryParam('first_name', false, Type::STRING))
-        ->setDescription('The name by which to filter users.')
-        ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
-    );
-
-$updateUser = (new Operation(Verb::PUT, [
-    (new Response(422, 'The client provided invalid user data.'))
-        ->addExample(new Example(Mime::JSON, [
-            'type' => 'user',
-            'id' => 1,
-            'properties' => [
-                'first_name' => 'Arya',
-                'age' => 9,
-            ],
+$paths = [
+    (new Path('/user', [
+        /**
+         * Create User
+         */
+        (new Operation(Verb::POST, [
+            (new Response(200, 'User created successfully.')),
+            (new Response(422, 'Invalid user data given.')),
+        ]))
+    ])),
+    (new Path('/user/{userId}', [
+        /**
+         * Read User
+         */
+        (new Operation(Verb::GET, [
+            (new Response(200, 'User fetched successfully.')),
+            (new Response(404, 'User id not found.')),
         ])),
-]))
-    ->addParameter(new BodyParam('first_name', true, new Schema()))
-    ->addParameter(new BodyParam('age', true, new Schema()));
-
-$users = new Path('/users', [
-    $listUsers,
-    $createUser,
-    $updateUser,
-]);
+        /**
+         * Update User
+         */
+        (new Operation(Verb::PUT, [
+            (new Response(200, 'User updated successfully.')),
+            (new Response(422, 'Invalid user data given.')),
+            (new Response(404, 'User id not found.')),
+        ])),
+        /**
+         * Delete User
+         */
+        (new Operation(Verb::DELETE, [
+            (new Response(200, 'User deleted successfully.')),
+            (new Response(404, 'User id not found.')),
+        ])),
+    ])),
+];
 
 /**
  * Define Swagger
  */
-$swagger = (new Swagger('2.0', $info, [$home, $users]))
+$swagger = (new Swagger('2.0', $info, $paths))
     ->setHost('192.176.99.100')
     ->setBasePath('/api')
     ->addScheme(Scheme::HTTPS)
@@ -119,94 +95,51 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
         }
     },
     "paths": {
-        "/": {
-            "get": {
+        "/user": {
+            "post": {
                 "responses": {
                     "200": {
-                        "description": "The response to this request."
+                        "description": "User created successfully."
+                    },
+                    "422": {
+                        "description": "Invalid user data given."
                     }
                 }
             }
         },
-        "/users": {
+        "/user/{userId}": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "The response to this request.",
-                        "headers": {
-                            "X-Rate-Limit-Remaining": {
-                                "type": "integer",
-                                "description": "The number of remaining requests in the current period."
-                            },
-                            "X-Rate-Limit-Reset": {
-                                "type": "integer",
-                                "description": "The number of seconds left in the current period."
-                            }
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "page",
-                        "required": false,
-                        "in": "query",
-                        "type": "string"
+                        "description": "User fetched successfully."
                     },
-                    {
-                        "name": "first_name",
-                        "required": false,
-                        "in": "query",
-                        "type": "string",
-                        "description": "The name by which to filter users.",
-                        "x-deprecated-warning": "Deprecated in 0.0.3"
+                    "404": {
+                        "description": "User id not found."
                     }
-                ]
-            },
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "The response to this request."
-                    },
-                    "422": {
-                        "description": "The response to this request."
-                    }
-                },
-                "summary": "Persist a user.",
-                "description": "Stores a user in a database.",
-                "operationId": "users.persist"
+                }
             },
             "put": {
                 "responses": {
-                    "422": {
-                        "description": "The client provided invalid user data.",
-                        "examples": {
-                            "application/json": [
-                                {
-                                    "type": "user",
-                                    "id": 1,
-                                    "properties": {
-                                        "first_name": "Arya",
-                                        "age": 9
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "first_name",
-                        "required": true,
-                        "in": "body",
-                        "schema": []
+                    "200": {
+                        "description": "User updated successfully."
                     },
-                    {
-                        "name": "age",
-                        "required": true,
-                        "in": "body",
-                        "schema": []
+                    "422": {
+                        "description": "Invalid user data given."
+                    },
+                    "404": {
+                        "description": "User id not found."
                     }
-                ]
+                }
+            },
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully."
+                    },
+                    "404": {
+                        "description": "User id not found."
+                    }
+                }
             }
         }
     },
