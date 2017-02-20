@@ -20,4 +20,18 @@ class Schema extends Component
     {
         return $this->set("properties.{$name}", $schema);
     }
+
+    public function setDescription(string $description): Schema
+    {
+        return $this->set('description', $description);
+    }
+
+    /**
+     * @param mixed $example
+     * @return Schema
+     */
+    public function setExample($example): Schema
+    {
+        return $this->set('example', $example);
+    }
 }

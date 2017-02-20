@@ -12,11 +12,12 @@ use SwagBag\Components\Path;
 use SwagBag\Components\Response;
 use SwagBag\Components\Schema;
 use SwagBag\Components\Swagger;
-use SwagBag\Mime;
-use SwagBag\ParamType;
-use SwagBag\Scheme;
-use SwagBag\Type;
-use SwagBag\Verb;
+use SwagBag\Constants\Mime;
+use SwagBag\Constants\ParamType;
+use SwagBag\Constants\SchemaType;
+use SwagBag\Constants\Scheme;
+use SwagBag\Constants\Type;
+use SwagBag\Constants\Verb;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -60,7 +61,24 @@ $paths = [
          * Read User
          */
         (new Operation(Verb::GET, [
-            (new Response(200, 'User fetched successfully.')),
+            (new Response(200, 'User fetched successfully.'))
+                ->setSchema((new Schema())
+                    ->setProperty('type', (new Schema(SchemaType::STRING)))
+                    ->setProperty('id', (new Schema(SchemaType::NUMBER)))
+                    ->setProperty('attributes', (new Schema())
+                        ->setProperty('name', (new Schema(SchemaType::STRING)))
+                        ->setProperty('phone', (new Schema(SchemaType::NUMBER)))
+                        ->setProperty('profileImg', (new Schema(SchemaType::STRING))
+                            ->setDescription('A url from which the User profile image can be fetched.')))
+                    ->setExample([
+                        'type' => 'User',
+                        'id' => 42,
+                        'attributes' => [
+                            'name' => 'John Doe',
+                            'phone' => 8881231234,
+                            'profileImg' => 'www.my.org/imgs/42.png',
+                        ],
+                    ])),
             (new Response(404, 'User id not found.')),
         ]))
             ->addParameter((new Parameter('include', Parameter::QUERY, ParamType::ARRAY))
@@ -77,7 +95,10 @@ $paths = [
             /**
              * Supply User fields as a JSON blob
              */
-            ->addParameter(new BodyParameter('body', true, (new Schema()))),
+            ->addParameter(new BodyParameter('body', true, (new Schema())
+                ->setProperty('name', (new Schema(SchemaType::STRING))->setExample('Mary Jane'))
+                ->setProperty('phone', (new Schema(SchemaType::NUMBER))->setExample(8881230123))
+                ->setProperty('password', (new Schema(SchemaType::STRING)))->setExample('pass123'))),
         /**
          * Delete User
          */

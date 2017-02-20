@@ -49,7 +49,24 @@ $paths = [
          * Read User
          */
         (new Operation(Verb::GET, [
-            (new Response(200, 'User fetched successfully.')),
+            (new Response(200, 'User fetched successfully.'))
+                ->setSchema((new Schema())
+                    ->setProperty('type', (new Schema(SchemaType::STRING)))
+                    ->setProperty('id', (new Schema(SchemaType::NUMBER)))
+                    ->setProperty('attributes', (new Schema())
+                        ->setProperty('name', (new Schema(SchemaType::STRING)))
+                        ->setProperty('phone', (new Schema(SchemaType::NUMBER)))
+                        ->setProperty('profileImg', (new Schema(SchemaType::STRING))
+                            ->setDescription('A url from which the User profile image can be fetched.')))
+                    ->setExample([
+                        'type' => 'User',
+                        'id' => 42,
+                        'attributes' => [
+                            'name' => 'John Doe',
+                            'phone' => 8881231234,
+                            'profileImg' => 'www.my.org/imgs/42.png',
+                        ],
+                    ])),
             (new Response(404, 'User id not found.')),
         ]))
             ->addParameter((new Parameter('include', Parameter::QUERY, ParamType::ARRAY))
@@ -66,7 +83,10 @@ $paths = [
             /**
              * Supply User fields as a JSON blob
              */
-            ->addParameter(new BodyParameter('body', true, (new Schema()))),
+            ->addParameter(new BodyParameter('body', true, (new Schema())
+                ->setProperty('name', (new Schema(SchemaType::STRING))->setExample('Mary Jane'))
+                ->setProperty('phone', (new Schema(SchemaType::NUMBER))->setExample(8881230123))
+                ->setProperty('password', (new Schema(SchemaType::STRING)))->setExample('pass123'))),
         /**
          * Delete User
          */
@@ -164,7 +184,42 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
             "get": {
                 "responses": {
                     "200": {
-                        "description": "User fetched successfully."
+                        "description": "User fetched successfully.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "number"
+                                },
+                                "attributes": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "phone": {
+                                            "type": "number"
+                                        },
+                                        "profileImg": {
+                                            "type": "string",
+                                            "description": "A url from which the User profile image can be fetched."
+                                        }
+                                    }
+                                }
+                            },
+                            "example": {
+                                "type": "User",
+                                "id": 42,
+                                "attributes": {
+                                    "name": "John Doe",
+                                    "phone": 8881231234,
+                                    "profileImg": "www.my.org/imgs/42.png"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "User id not found."
@@ -200,7 +255,23 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
                         "name": "body",
                         "in": "body",
                         "required": true,
-                        "schema": []
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "example": "Mary Jane"
+                                },
+                                "phone": {
+                                    "type": "number",
+                                    "example": 8881230123
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": "pass123"
+                        }
                     }
                 ]
             },
