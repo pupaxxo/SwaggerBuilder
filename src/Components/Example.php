@@ -11,7 +11,9 @@ class Example extends Component
     public function __construct(string $mime = Mime::JSON, array $structure = [])
     {
         $this->mime = $mime;
-        $this->structure = $structure;
+        foreach ($structure as $key => $value) {
+            $this[$key] = $value;
+        }
     }
 
     public function getMime(): string

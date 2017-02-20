@@ -6,8 +6,6 @@ use SwagBag\Constants\Mime;
 
 trait Mimes
 {
-    use JsonStruct;
-
     /**
      * @param string $mime
      * @return static

@@ -4,8 +4,6 @@ namespace SwagBag\Traits;
 
 trait Patterned
 {
-    use JsonStruct;
-
     /**
      * @param string $key
      * @param string $value

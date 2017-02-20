@@ -2,15 +2,13 @@
 
 namespace SwagBag\Components;
 
+use InvalidArgumentException;
 use SwagBag\Traits\Mimes;
 use SwagBag\Traits\Schemes;
 
 class Swagger extends Component
 {
-    use Mimes, Schemes {
-        Mimes::set insteadof Schemes;
-        Mimes::add insteadof Schemes;
-    }
+    use Mimes, Schemes;
 
     /**
      * Swagger constructor.
@@ -20,12 +18,15 @@ class Swagger extends Component
      */
     public function __construct(string $version, Info $info, array $paths = [])
     {
-        $this
-            ->set('swagger', $version)
-            ->set('info', $info);
+        if (!$paths) {
+            throw new InvalidArgumentException('At least one path must be specified.');
+        }
         foreach ($paths as $path) {
             $this->addPath($path);
         }
+        $this
+            ->set('swagger', $version)
+            ->set('info', $info);
     }
 
     public function addPath(Path $path): Swagger

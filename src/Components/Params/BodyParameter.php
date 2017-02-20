@@ -11,7 +11,7 @@ class BodyParameter extends Parameter
     public function __construct($name = 'id', bool $required = false, Schema $schema)
     {
         parent::__construct($name, static::BODY, static::BODY, $required);
-        unset($this->structure['type']);
+        unset($this['type']);
         $this->setSchema($schema);
     }
 

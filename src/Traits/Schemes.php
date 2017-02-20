@@ -6,8 +6,6 @@ use SwagBag\Constants\Scheme;
 
 trait Schemes
 {
-    use JsonStruct;
-
     /**
      * @param string $scheme
      * @return static

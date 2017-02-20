@@ -6,8 +6,6 @@ use SwagBag\Components\Items as ItemsComponent;
 
 trait Items
 {
-    use JsonStruct;
-
     /**
      * @param ItemsComponent $items
      * @return static

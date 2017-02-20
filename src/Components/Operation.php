@@ -9,12 +9,7 @@ use SwagBag\Traits\Schemes;
 
 class Operation extends Component
 {
-    use Mimes, Parameters, Schemes {
-        Mimes::set insteadof Parameters;
-        Mimes::set insteadof Schemes;
-        Mimes::add insteadof Parameters;
-        Mimes::add insteadof Schemes;
-    }
+    use Mimes, Parameters, Schemes;
 
     private static $IDS = [];
 

@@ -13,5 +13,8 @@
       "Lib\\": "lib/"
     }
   },
-  "require": {}
+  "require": {},
+  "require-dev": {
+    "phpspec/phpspec": "^3.2"
+  }
 }

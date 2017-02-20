@@ -2,15 +2,36 @@
 
 namespace SwagBag\Components;
 
-use JsonSerializable;
-use SwagBag\Traits\JsonStruct;
+use ArrayObject;
 
-class Component implements JsonSerializable
+class Component extends ArrayObject
 {
-    use JsonStruct;
-
-    function jsonSerialize()
+    protected function add(string $key, $value): Component
     {
-        return $this->structure;
+        $keys = explode('.', $key);
+        $iterator = &$this;
+        foreach ($keys as $key) {
+            if (!is_array($iterator[$key] ?? null)) {
+                $iterator[$key] = [];
+            }
+            $iterator = &$iterator[$key];
+        }
+        $iterator[] = $value;
+        return $this;
+    }
+
+    protected function set(string $key, $value): Component
+    {
+        $keys = explode('.', $key);
+        $valueKey = array_pop($keys);
+        $iterator = &$this;
+        foreach ($keys as $key) {
+            if (!is_array($iterator[$key] ?? null)) {
+                $iterator[$key] = [];
+            }
+            $iterator = &$iterator[$key];
+        }
+        $iterator[$valueKey] = $value;
+        return $this;
     }
 }

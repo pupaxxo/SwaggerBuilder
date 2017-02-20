@@ -6,8 +6,6 @@ use SwagBag\Components\Params\Parameter;
 
 trait Parameters
 {
-    use JsonStruct;
-
     /**
      * @param Parameter $parameter
      * @return static
