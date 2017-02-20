@@ -2,7 +2,7 @@
 
 namespace SwagBag\Traits;
 
-use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Parameter;
 
 trait Parameters
 {

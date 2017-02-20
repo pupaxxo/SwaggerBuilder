@@ -6,11 +6,8 @@ use SwagBag\Components\Header;
 use SwagBag\Components\Info;
 use SwagBag\Components\License;
 use SwagBag\Components\Operation;
-use SwagBag\Components\Parameters\BodyParam;
-use SwagBag\Components\Parameters\QueryParam;
 use SwagBag\Components\Path;
 use SwagBag\Components\Response;
-use SwagBag\Components\Schema;
 use SwagBag\Components\Swagger;
 use SwagBag\Mime;
 use SwagBag\Scheme;
@@ -66,12 +63,7 @@ $listUsers = (new Operation(Verb::GET, [
             ->setDescription('The number of remaining requests in the current period.'))
         ->addHeader((new Header('X-Rate-Limit-Reset', Type::INTEGER))
             ->setDescription('The number of seconds left in the current period.')),
-]))
-    ->addParameter(new QueryParam('page'))
-    ->addParameter((new QueryParam('first_name', false, Type::STRING))
-        ->setDescription('The name by which to filter users.')
-        ->setOther('deprecated-warning', 'Deprecated in 0.0.3')
-    );
+]));
 
 $updateUser = (new Operation(Verb::PUT, [
     (new Response(422, 'The client provided invalid user data.'))
@@ -83,9 +75,7 @@ $updateUser = (new Operation(Verb::PUT, [
                 'age' => 9,
             ],
         ])),
-]))
-    ->addParameter(new BodyParam('first_name', true, new Schema()))
-    ->addParameter(new BodyParam('age', true, new Schema()));
+]));
 
 $users = new Path('/users', [
     $listUsers,
