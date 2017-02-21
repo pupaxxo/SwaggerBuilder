@@ -5,7 +5,9 @@ use SwagBag\Components\Info;
 use SwagBag\Components\Items;
 use SwagBag\Components\License;
 use SwagBag\Components\Operation;
+use SwagBag\Components\Params\BodyParameter;
 use SwagBag\Components\Params\Parameter;
+use SwagBag\Components\Params\PathParameter;
 use SwagBag\Components\Path;
 use SwagBag\Components\Response;
 use SwagBag\Components\Schema;
@@ -69,21 +71,64 @@ function buildFindPets(): Operation
         ->addParameter($limit);
 }
 
-function buildCreatePet(): Operation
+function buildAddPet(): Operation
 {
-    return (new Operation(Verb::POST, [new Response()]));
+    global $petModel, $errorModel;
+
+    $newPet = (new Schema())
+        ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG))
+        ->setProperty('name', new Schema(Type::STRING), true)
+        ->setProperty('tag', new Schema(Type::STRING));
+
+    $addPetBody = (new BodyParameter('pet', true, $newPet))
+        ->setDescription('Pet to add to the store');
+
+    $responses = [
+        (new Response(200, 'pet response'))->setSchema($petModel),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
+    ];
+
+    return (new Operation(Verb::POST, $responses))
+        ->setDescription('Creates a new pet in the store. Duplicates are allowed')
+        ->setOperationId('addPet')
+        ->setProducedMimes()
+        ->addParameter($addPetBody);
 }
 
-function buildPetsPath(): Path
+function buildFindPetById(): Operation
 {
-    return new Path('/pets', [
-        buildFindPets(),
-        buildCreatePet(),
-    ]);
+    global $petModel, $errorModel;
+
+    $responses = [
+        (new Response(200, 'pet response'))->setSchema($petModel),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
+    ];
+
+    return (new Operation(Verb::GET, $responses))
+        ->setDescription('Returns a user based on a single ID, if the user does not have access to the pet')
+        ->setOperationId('findPetById')
+        ->setProducedMimes([Mime::APP_JSON, Mime::APP_XML, Mime::TEXT_XML, Mime::TEXT_HTML]);
+}
+
+function buildDeletePet(): Operation
+{
+    global $errorModel;
+
+    $responses = [
+        new Response(204, 'pet deleted'),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
+    ];
+    return (new Operation(Verb::DELETE, $responses))
+        ->setDescription('deletes a single pet based on the ID supplied')
+        ->setOperationId('deletePet');
 }
 
 $paths = [
-    buildPetsPath(),
+    new Path('/pets', [buildFindPets(), buildAddPet(),]),
+    (new Path('/pets{id}', [buildFindPetById(), buildDeletePet()]))
+        ->addParameter((new PathParameter('id', Type::INTEGER))
+            ->setFormat(Format::LONG)
+            ->setDescription('The ID of the pet to operate on.')),
 ];
 
 $swagger = (new Swagger('2.0', buildInfo(), $paths))

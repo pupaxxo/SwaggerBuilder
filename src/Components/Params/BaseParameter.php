@@ -5,10 +5,11 @@ namespace SwagBag\Components\Params;
 use SwagBag\Components\Component;
 use SwagBag\Constants\ParamType;
 use SwagBag\Traits\Description;
+use SwagBag\Traits\Format;
 
 abstract class BaseParameter extends Component
 {
-    use Description;
+    use Description, Format;
 
     const QUERY = 'query';
     const HEADER = 'header';
