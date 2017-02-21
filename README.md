@@ -87,7 +87,7 @@ $responses = [
     (new Response('default', 'unexpected error'))->setSchema($errorResponseModel),
 ];
 ```
-See `/example.php` for a complete implementation of all the paths in the Petstore CRUD example.
+See [`/example.php`](https://github.com/SamuelDavis/SwaggerBuilder/blob/master/example.php) for a complete implementation of all the paths in the Petstore CRUD example.
 
 #### Swagger JSON
 Just json_encode the Swagger object (or any object which extends Component) to get a valid Swagger JSON blob.
