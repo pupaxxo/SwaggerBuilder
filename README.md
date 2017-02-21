@@ -1,305 +1,171 @@
-# Still very much in development!
-...
 # SwaggerBuilder
 Now you can write your Swagger API documentation in JSON, YAML, _or_ PHP!
 
-Do you find the Swagger config very hard to write? Well (with an informative IDE) this should make it easier. Fields Swagger requires appear in constructors, optional fields are set with specific setter methods.
+Do you find the Swagger config very hard to write? Well (with an informative IDE) this should make it easier.
 
-Type hinting all over the place!
+### Usage Note:
+Fields Swagger requires appear in constructors, optional fields are set with specific setter methods. There's type hinting all over the place!
 
-###Example
+## Example: Swagger Petstore (Simple)
+
+#### Swagger
+A valid Swagger object requires 3 things: the Swagger version, an Info object and at least 1 Path.
 ```php
-$info = (new Info('Example', '0.1.0'))
-    ->setDescription('My example.')
-    ->setTermsOfService('Some terms')
-    ->setContact((new Contact())
-        ->setName('Example Org')
-        ->setUrl('www.example.org')
-        ->setEmail('support@example.org')
-        ->setOther('billing', 'billing@example.org')
-        ->setOther('technical', 'technical@example.org'))
-    ->setLicense((new License('Example License'))
-        ->setUrl('www.my.org/license')
-        ->setOther('more-license-data', 'This is just an example.')
-        ->setOther('extra-license-data', 'Really, this is all just for example.'));
+$swagger = (new Swagger('2.0', $info, $paths))
+    ->setHost('petstore.swagger.io')
+    ->setBasePath('/api')
+    ->setSchemes([Scheme::HTTP])
+    ->setConsumedMimes([Mime::APP_JSON])
+    ->setProducedMimes([Mime::APP_JSON]);
+```
 
-$paths = [
-    (new Path('/user', [
-        /**
-         * Create User
-         */
-        (new Operation(Verb::POST, [
-            (new Response(200, 'User created successfully.')),
-            (new Response(422, 'Invalid user data given.')),
-        ]))
-            /**
-             * Supply User data from a form
-             */
-            ->addConsumedMime(Mime::FORM_DATA)
-            ->addParameter((new Parameter('name', Parameter::FORM, ParamType::STRING, true)))
-            ->addParameter((new Parameter('password', Parameter::FORM, ParamType::STRING, true))
-                ->setMinLength(6))
-            ->addParameter((new Parameter('phone', Parameter::FORM, ParamType::INTEGER, false))
-                ->setMin(1000000000)
-                ->setMax(99999999999))
-            ->addParameter((new Parameter('profileImg', Parameter::FORM, ParamType::STRING, false))),
-    ])),
-    (new Path('/user/{userId}', [
-        /**
-         * Read User
-         */
-        (new Operation(Verb::GET, [
-            (new Response(200, 'User fetched successfully.'))
-                ->setSchema((new Schema())
-                    ->setProperty('type', (new Schema(SchemaType::STRING)))
-                    ->setProperty('id', (new Schema(SchemaType::NUMBER)))
-                    ->setProperty('attributes', (new Schema())
-                        ->setProperty('name', (new Schema(SchemaType::STRING)))
-                        ->setProperty('phone', (new Schema(SchemaType::NUMBER)))
-                        ->setProperty('profileImg', (new Schema(SchemaType::STRING))
-                            ->setDescription('A url from which the User profile image can be fetched.')))
-                    ->setExample([
-                        'type' => 'User',
-                        'id' => 42,
-                        'attributes' => [
-                            'name' => 'John Doe',
-                            'phone' => 8881231234,
-                            'profileImg' => 'www.my.org/imgs/42.png',
-                        ],
-                    ])),
-            (new Response(404, 'User id not found.')),
-        ]))
-            ->addParameter((new Parameter('include', Parameter::QUERY, ParamType::ARRAY))
-                ->setItems(new Items(Type::STRING))
-                ->setDescription('Available User relationships include: [subscription, organizations]')),
-        /**
-         * Update User
-         */
-        (new Operation(Verb::PUT, [
-            (new Response(200, 'User updated successfully.')),
-            (new Response(422, 'Invalid user data given.')),
-            (new Response(404, 'User id not found.')),
-        ]))
-            /**
-             * Supply User fields as a JSON blob
-             */
-            ->addParameter(new BodyParameter('body', true, (new Schema())
-                ->setProperty('name', (new Schema(SchemaType::STRING))->setExample('Mary Jane'))
-                ->setProperty('phone', (new Schema(SchemaType::NUMBER))->setExample(8881230123))
-                ->setProperty('password', (new Schema(SchemaType::STRING)))->setExample('pass123'))),
-        /**
-         * Delete User
-         */
-        (new Operation(Verb::DELETE, [
-            (new Response(200, 'User deleted successfully.')),
-            (new Response(404, 'User id not found.')),
-        ])),
-    ]))
-        ->addParameter((new PathParameter('userId', ParamType::INTEGER))
-            ->setDescription('The id of the User resource to be operated on.')),
+#### Info
+A valid Info object requires only 2 things: the application name and version.
+```php
+// (optional) contact from the example
+$contact = (new Contact())
+    ->setName('Swagger API team')
+    ->setEmail('foo@example.com')
+    ->setUrl('http://swagger.io');
+
+// (optional) license from the example
+$license = (new License('MIT'))
+    ->setUrl('http://opensource.org/licenses/MIT');
+
+// The Info object is what we really need
+$info = (new Info('Swagger Petstore (Simple)', '1.0.0'))
+    ->setDescription('A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification')
+    ->setTermsOfService('http://helloreverb.com/terms/')
+    ->setContact($contact)
+    ->setLicense($license);
+```
+
+#### Paths
+A valid Path object requires a route and at least 1 Operation
+The Operation requires an HTTP verb and at least 1 example Response
+```php
+$petModel = (new Schema())
+    ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG), true)
+    ->setProperty('name', new Schema(Type::STRING), true)
+    ->setProperty('tag', new Schema(Type::STRING));
+
+$errorModel = (new Schema())
+    ->setProperty('code', (new Schema(Type::INTEGER))->setFormat(Format::INTEGER), true)
+    ->setProperty('message', new Schema(Type::STRING), true);
+
+$responses = [
+    (new Response(200, 'pet response'))->setSchema($petModel),
+    (new Response('default', 'unexpected error'))->setSchema($errorModel),
 ];
 
-/**
- * Define Swagger
- */
-$swagger = (new Swagger('2.0', $info, $paths))
-    ->setHost('192.176.99.100')
-    ->setBasePath('/api')
-    ->addScheme(Scheme::HTTPS)
-    ->addConsumedMime(Mime::JSON)
-    ->addProducedMime(Mime::JSON);
+$findPetById = (new Operation(Verb::GET, $responses))
+    ->setDescription('Returns a user based on a single ID, if the user does not have access to the pet')
+    ->setOperationId('findPetById')
+    ->setProducedMimes([Mime::APP_JSON, Mime::APP_XML, Mime::TEXT_XML, Mime::TEXT_HTML]);
 
+$paths = [
+    (new Path('/pets/{id}', [$findPetById]))
+        ->addParameter((new PathParameter('id', Type::INTEGER))
+            ->setFormat(Format::LONG)
+            ->setDescription('The ID of the pet to operate on.')),
+];
+```
+See `/example.php` for a complete implementation of all the paths in the Petstore CRUD example.
+
+#### Swagger JSON
+Just json_encode the Swagger object (or any object which extends Component) to get a valid Swagger JSON blob.
+```php
 echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n";
 ```
-###Output
 ```json
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "Example",
-        "version": "0.1.0",
-        "description": "My example.",
-        "termsOfService": "Some terms",
-        "contact": {
-            "name": "Example Org",
-            "url": "www.example.org",
-            "email": "support@example.org",
-            "x-billing": "billing@example.org",
-            "x-technical": "technical@example.org"
-        },
-        "license": {
-            "name": "Example License",
-            "url": "www.my.org/license",
-            "x-more-license-data": "This is just an example.",
-            "x-extra-license-data": "Really, this is all just for example."
-        }
-    },
     "paths": {
-        "/user": {
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "User created successfully."
-                    },
-                    "422": {
-                        "description": "Invalid user data given."
-                    }
-                },
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "formData",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "name": "password",
-                        "in": "formData",
-                        "type": "string",
-                        "required": true,
-                        "minLength": 6
-                    },
-                    {
-                        "name": "phone",
-                        "in": "formData",
-                        "type": "integer",
-                        "required": false,
-                        "minimum": 1000000000,
-                        "exclusiveMinimum": false,
-                        "maximum": 99999999999
-                    },
-                    {
-                        "name": "profileImg",
-                        "in": "formData",
-                        "type": "string",
-                        "required": false
-                    }
-                ]
-            }
-        },
-        "/user/{userId}": {
+        "/pets/{id}": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "User fetched successfully.",
+                        "description": "pet response",
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "id",
+                                "name"
+                            ],
                             "properties": {
-                                "type": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "name": {
                                     "type": "string"
                                 },
-                                "id": {
-                                    "type": "number"
-                                },
-                                "attributes": {
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "phone": {
-                                            "type": "number"
-                                        },
-                                        "profileImg": {
-                                            "type": "string",
-                                            "description": "A url from which the User profile image can be fetched."
-                                        }
-                                    }
-                                }
-                            },
-                            "example": {
-                                "type": "User",
-                                "id": 42,
-                                "attributes": {
-                                    "name": "John Doe",
-                                    "phone": 8881231234,
-                                    "profileImg": "www.my.org/imgs/42.png"
+                                "tag": {
+                                    "type": "string"
                                 }
                             }
                         }
                     },
-                    "404": {
-                        "description": "User id not found."
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "type": "array",
-                        "required": false,
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "Available User relationships include: [subscription, organizations]"
-                    }
-                ]
-            },
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "User updated successfully."
-                    },
-                    "422": {
-                        "description": "Invalid user data given."
-                    },
-                    "404": {
-                        "description": "User id not found."
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
+                    "default": {
+                        "description": "unexpected error",
                         "schema": {
                             "type": "object",
+                            "required": [
+                                "code",
+                                "message"
+                            ],
                             "properties": {
-                                "name": {
-                                    "type": "string",
-                                    "example": "Mary Jane"
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
                                 },
-                                "phone": {
-                                    "type": "number",
-                                    "example": 8881230123
-                                },
-                                "password": {
+                                "message": {
                                     "type": "string"
                                 }
-                            },
-                            "example": "pass123"
+                            }
                         }
                     }
+                },
+                "description": "Returns a user based on a single ID, if the user does not have access to the pet",
+                "operationId": "findPetById",
+                "produces": [
+                    "application/json",
+                    "application/xml",
+                    "text/xml",
+                    "text/html"
                 ]
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": "User deleted successfully."
-                    },
-                    "404": {
-                        "description": "User id not found."
-                    }
-                }
             },
             "parameters": [
                 {
-                    "name": "userId",
+                    "name": "id",
                     "in": "path",
                     "type": "integer",
                     "required": true,
-                    "description": "The id of the User resource to be operated on."
+                    "format": "int64",
+                    "description": "The ID of the pet to operate on."
                 }
             ]
         }
     },
-    "host": "192.176.99.100",
+    "swagger": "2.0",
+    "info": {
+        "title": "Swagger Petstore (Simple)",
+        "version": "1.0.0",
+        "description": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification",
+        "termsOfService": "http://helloreverb.com/terms/",
+        "contact": {
+            "name": "Swagger API team",
+            "email": "foo@example.com",
+            "url": "http://swagger.io"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "petstore.swagger.io",
     "basePath": "/api",
     "schemes": [
-        "https"
+        "http"
     ],
     "consumes": [
         "application/json"
