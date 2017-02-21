@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Components;
+namespace Tests\Components\Parameters;
 
 use SwagBag\Components\Parameters\Parameter;
 use SwagBag\Constants\Type;
