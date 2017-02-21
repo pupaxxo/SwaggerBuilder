@@ -3,7 +3,6 @@
 namespace Tests\Components;
 
 use SwaggerBuilder\Components\Items;
-use SwaggerBuilder\Constants\SchemaType;
 use SwaggerBuilder\Constants\Type;
 use Tests\TestCase;
 
@@ -23,7 +22,7 @@ class ItemsTest extends TestCase
     public function testItCompilesEverything()
     {
         $expected = [
-            'type' => SchemaType::ARRAY,
+            'type' => Type::ARRAY,
             'items' => $this->createMock(Items::class),
         ];
 

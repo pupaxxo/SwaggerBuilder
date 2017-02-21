@@ -3,7 +3,7 @@
 namespace SwaggerBuilder\Components\Params;
 
 use SwaggerBuilder\Components\Component;
-use SwaggerBuilder\Constants\ParamType;
+use SwaggerBuilder\Constants\Type;
 use SwaggerBuilder\Traits\Description;
 use SwaggerBuilder\Traits\Format;
 
@@ -20,7 +20,7 @@ abstract class BaseParameter extends Component
     public function __construct(
         string $name = 'filter',
         string $in = self::QUERY,
-        string $type = ParamType::STRING,
+        string $type = Type::STRING,
         bool $required = false
     ) {
         $this

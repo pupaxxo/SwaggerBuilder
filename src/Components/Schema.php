@@ -2,7 +2,7 @@
 
 namespace SwaggerBuilder\Components;
 
-use SwaggerBuilder\Constants\SchemaType;
+use SwaggerBuilder\Constants\Type;
 use SwaggerBuilder\Traits\Description;
 use SwaggerBuilder\Traits\Enum;
 use SwaggerBuilder\Traits\Format;
@@ -10,13 +10,13 @@ use SwaggerBuilder\Traits\Items;
 use SwaggerBuilder\Traits\Length;
 use SwaggerBuilder\Traits\Pattern;
 use SwaggerBuilder\Traits\Range;
-use SwaggerBuilder\Traits\Type;
+use SwaggerBuilder\Traits\Type as TypeSetter;
 
 class Schema extends Component
 {
-    use Description, Type, Items, Format, Range, Length, Pattern, Enum;
+    use Description, TypeSetter, Items, Format, Range, Length, Pattern, Enum;
 
-    public function __construct(string $type = SchemaType::OBJECT)
+    public function __construct(string $type = Type::OBJECT)
     {
         $this->setType($type);
     }

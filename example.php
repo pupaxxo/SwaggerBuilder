@@ -14,7 +14,6 @@ use SwaggerBuilder\Components\Schema;
 use SwaggerBuilder\Components\Swagger;
 use SwaggerBuilder\Constants\Format;
 use SwaggerBuilder\Constants\Mime;
-use SwaggerBuilder\Constants\ParamType;
 use SwaggerBuilder\Constants\Type;
 use SwaggerBuilder\Constants\Verb;
 
@@ -50,11 +49,11 @@ function buildFindPets(): Operation
 {
     global $petModel, $errorModel;
 
-    $tags = (new Parameter('tags', Parameter::QUERY, ParamType::ARRAY))
+    $tags = (new Parameter('tags', Parameter::QUERY, Type::ARRAY))
         ->setDescription('tags to filter by')
         ->setItems((new Items()))
         ->setCollectionFormat(Format::CSV);
-    $limit = (new Parameter('limit', Parameter::QUERY, ParamType::INTEGER))
+    $limit = (new Parameter('limit', Parameter::QUERY, Type::INTEGER))
         ->setDescription('maximum number of results to return')
         ->setFormat(Format::INTEGER);
 

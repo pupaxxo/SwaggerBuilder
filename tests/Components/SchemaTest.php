@@ -3,7 +3,7 @@
 namespace Tests\Components;
 
 use SwaggerBuilder\Components\Schema;
-use SwaggerBuilder\Constants\SchemaType;
+use SwaggerBuilder\Constants\Type;
 use Tests\TestCase;
 
 class SchemaTest extends TestCase
@@ -11,7 +11,7 @@ class SchemaTest extends TestCase
     public function testItCompilesDefaults()
     {
         $expected = [
-            'type' => SchemaType::OBJECT,
+            'type' => Type::OBJECT,
         ];
 
         $schema = new Schema($expected['type']);
@@ -22,7 +22,7 @@ class SchemaTest extends TestCase
     public function testItCompilesSchemaSpecifics()
     {
         $expected = [
-            'type' => SchemaType::OBJECT,
+            'type' => Type::OBJECT,
             'example' => [
                 'type' => 'User',
                 'id' => 42,
@@ -34,8 +34,8 @@ class SchemaTest extends TestCase
                 'id',
             ],
             'properties' => [
-                'id' => new Schema(SchemaType::NUMBER),
-                'name' => new Schema(SchemaType::STRING),
+                'id' => new Schema(Type::NUMBER),
+                'name' => new Schema(Type::STRING),
             ],
         ];
 
