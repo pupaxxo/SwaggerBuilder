@@ -2,15 +2,15 @@
 
 namespace SwaggerBuilder\Traits;
 
-use SwaggerBuilder\Components\Items as ItemsComponent;
+use SwaggerBuilder\Components\Schema;
 
 trait Items
 {
     /**
-     * @param ItemsComponent $items
+     * @param Schema $items
      * @return static
      */
-    public function setItems(ItemsComponent $items)
+    public function setItems(Schema $items)
     {
         return $this->set('items', $items);
     }

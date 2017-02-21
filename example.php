@@ -2,7 +2,6 @@
 
 use SwaggerBuilder\Components\Contact;
 use SwaggerBuilder\Components\Info;
-use SwaggerBuilder\Components\Items;
 use SwaggerBuilder\Components\License;
 use SwaggerBuilder\Components\Operation;
 use SwaggerBuilder\Components\Params\BodyParameter;
@@ -49,11 +48,11 @@ function buildInfo(): Info
 
 function buildFindPets(): Operation
 {
-    global $petModel, $errorModel;
+    global $f, $petModel, $errorModel;
 
     $tags = (new Parameter('tags', Parameter::QUERY, Type::ARRAY))
         ->setDescription('tags to filter by')
-        ->setItems((new Items()))
+        ->setItems($f->items)
         ->setCollectionFormat(Format::CSV);
     $limit = (new Parameter('limit', Parameter::QUERY, Type::INTEGER))
         ->setDescription('maximum number of results to return')

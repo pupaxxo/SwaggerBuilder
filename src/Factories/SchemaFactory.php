@@ -11,6 +11,7 @@ use SwaggerBuilder\Constants\Type;
  * @property Schema object
  * @property Schema integer
  * @property Schema string
+ * @property Schema items
  */
 class SchemaFactory
 {
@@ -27,6 +28,11 @@ class SchemaFactory
     public function string(): Schema
     {
         return new Schema(Type::STRING);
+    }
+
+    public function items(Schema $type = null): Schema
+    {
+        return (new Schema(Type::ARRAY))->setItems($type ?: $this->string);
     }
 
     public function __get($name)
