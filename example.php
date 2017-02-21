@@ -10,23 +10,25 @@ use SwaggerBuilder\Components\Params\Parameter;
 use SwaggerBuilder\Components\Params\PathParameter;
 use SwaggerBuilder\Components\Path;
 use SwaggerBuilder\Components\Response;
-use SwaggerBuilder\Components\Schema;
 use SwaggerBuilder\Components\Swagger;
 use SwaggerBuilder\Constants\Format;
 use SwaggerBuilder\Constants\Mime;
 use SwaggerBuilder\Constants\Type;
 use SwaggerBuilder\Constants\Verb;
+use SwaggerBuilder\Factories\SchemaFactory;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$petModel = (new Schema())
-    ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG), true)
-    ->setProperty('name', new Schema(Type::STRING), true)
-    ->setProperty('tag', new Schema(Type::STRING));
+$f = new SchemaFactory();
 
-$errorModel = (new Schema())
-    ->setProperty('code', (new Schema(Type::INTEGER))->setFormat(Format::INTEGER), true)
-    ->setProperty('message', new Schema(Type::STRING), true);
+$petModel = $f->object
+    ->setProperty('id', $f->integer(Format::LONG), true)
+    ->setProperty('name', $f->string, true)
+    ->setProperty('tag', $f->string);
+
+$errorModel = $f->object
+    ->setProperty('code', $f->integer, true)
+    ->setProperty('message', $f->string, true);
 
 function buildInfo(): Info
 {
@@ -72,12 +74,12 @@ function buildFindPets(): Operation
 
 function buildAddPet(): Operation
 {
-    global $petModel, $errorModel;
+    global $f, $petModel, $errorModel;
 
-    $newPet = (new Schema())
-        ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG))
-        ->setProperty('name', new Schema(Type::STRING), true)
-        ->setProperty('tag', new Schema(Type::STRING));
+    $newPet = $f->object
+        ->setProperty('id', $f->integer(Format::LONG))
+        ->setProperty('name', $f->string, true)
+        ->setProperty('tag', $f->string);
 
     $addPetBody = (new BodyParameter('pet', true, $newPet))
         ->setDescription('Pet to add to the store');
