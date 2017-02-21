@@ -2,15 +2,15 @@
 
 namespace SwagBag\Traits;
 
-use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Parameters\BaseParameter;
 
 trait Parameters
 {
     /**
-     * @param Parameter $parameter
+     * @param BaseParameter $parameter
      * @return static
      */
-    public function addParameter(Parameter $parameter)
+    public function addParameter(BaseParameter $parameter)
     {
         return $this->add("parameters", $parameter);
     }

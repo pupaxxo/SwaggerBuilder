@@ -4,7 +4,7 @@ namespace SwagBag\Components\Parameters;
 
 use SwagBag\Constants\ParamType;
 
-class PathParameter extends Parameter
+class PathParameter extends BaseParameter
 {
     const PATH = 'path';
 

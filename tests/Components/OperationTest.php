@@ -4,7 +4,7 @@ namespace Tests\Components;
 
 use InvalidArgumentException;
 use SwagBag\Components\Operation;
-use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Parameters\BaseParameter;
 use SwagBag\Components\Response;
 use SwagBag\Constants\Mime;
 use SwagBag\Constants\Scheme;
@@ -132,10 +132,10 @@ class OperationTest extends TestCase
         static::assertComponentStructure($expected, $operation);
     }
 
-    private function mockParameter(): Parameter
+    private function mockParameter(): BaseParameter
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Parameter $parameter */
-        $parameter = $this->createMock(Parameter::class);
+        /** @var \PHPUnit_Framework_MockObject_MockObject|BaseParameter $parameter */
+        $parameter = $this->createMock(BaseParameter::class);
 
         return $parameter;
     }

@@ -3,7 +3,7 @@
 namespace Tests\Components;
 
 use SwagBag\Components\Operation;
-use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Parameters\PathParameter;
 use SwagBag\Components\Path;
 use SwagBag\Constants\Verb;
 use Tests\ArrayAssertions;
@@ -86,10 +86,10 @@ class PathTest extends TestCase
         static::assertComponentStructure($expected, $path);
     }
 
-    private function mockParameter(): Parameter
+    private function mockParameter(): PathParameter
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Parameter $parameter */
-        $parameter = $this->createMock(Parameter::class);
+        /** @var \PHPUnit_Framework_MockObject_MockObject|PathParameter $parameter */
+        $parameter = $this->createMock(PathParameter::class);
 
         return $parameter;
     }
