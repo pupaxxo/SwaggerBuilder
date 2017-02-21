@@ -2,8 +2,8 @@
 
 namespace Tests\Components\Parameters;
 
-use SwagBag\Components\Parameters\BodyParameter;
-use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Params\BodyParameter;
+use SwagBag\Components\Params\Parameter;
 use SwagBag\Components\Schema;
 use Tests\TestCase;
 

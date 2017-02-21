@@ -2,8 +2,8 @@
 
 namespace Tests\Components\Parameters;
 
-use SwagBag\Components\Parameters\Parameter;
-use SwagBag\Components\Parameters\PathParameter;
+use SwagBag\Components\Params\Parameter;
+use SwagBag\Components\Params\PathParameter;
 use SwagBag\Constants\Type;
 use Tests\TestCase;
 

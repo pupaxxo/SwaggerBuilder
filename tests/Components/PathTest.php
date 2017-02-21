@@ -3,7 +3,7 @@
 namespace Tests\Components;
 
 use SwagBag\Components\Operation;
-use SwagBag\Components\Parameters\PathParameter;
+use SwagBag\Components\Params\PathParameter;
 use SwagBag\Components\Path;
 use SwagBag\Constants\Verb;
 use Tests\ArrayAssertions;

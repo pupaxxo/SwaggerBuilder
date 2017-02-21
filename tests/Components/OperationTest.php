@@ -4,7 +4,7 @@ namespace Tests\Components;
 
 use InvalidArgumentException;
 use SwagBag\Components\Operation;
-use SwagBag\Components\Parameters\BaseParameter;
+use SwagBag\Components\Params\BaseParameter;
 use SwagBag\Components\Response;
 use SwagBag\Constants\Mime;
 use SwagBag\Constants\Scheme;

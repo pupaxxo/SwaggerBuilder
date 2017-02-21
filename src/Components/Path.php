@@ -2,15 +2,12 @@
 
 namespace SwagBag\Components;
 
-use SwagBag\Components\Parameters\PathParameter;
 use SwagBag\Traits\Parameters;
 use SwagBag\Validator;
 
 class Path extends Component
 {
-    use Parameters {
-        Parameters::addParameter as private doAddParameter;
-    }
+    use Parameters;
 
     private $uri;
 
@@ -31,10 +28,5 @@ class Path extends Component
     public function getUri(): string
     {
         return $this->uri;
-    }
-
-    public function addParameter(PathParameter $parameter)
-    {
-        return $this->doAddParameter($parameter);
     }
 }

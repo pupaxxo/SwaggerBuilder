@@ -1,6 +1,6 @@
 <?php
 
-namespace SwagBag\Components\Parameters;
+namespace SwagBag\Components\Params;
 
 use SwagBag\Constants\ParamType;
 

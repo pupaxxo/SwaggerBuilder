@@ -2,7 +2,7 @@
 
 namespace Tests\Components\Parameters;
 
-use SwagBag\Components\Parameters\Parameter;
+use SwagBag\Components\Params\Parameter;
 use SwagBag\Constants\Type;
 use Tests\TestCase;
 
