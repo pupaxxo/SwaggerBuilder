@@ -9,7 +9,7 @@ Fields Swagger requires appear in constructors, optional fields are set with spe
 ## Example: Swagger Petstore (Simple)
 
 #### Swagger
-A valid Swagger object requires 3 things: the Swagger version, an Info object and at least 1 Path.
+A valid Swagger object requires the Swagger version, an Info object and at least 1 Path.
 ```php
 $swagger = (new Swagger('2.0', $info, $paths))
     ->setHost('petstore.swagger.io')
@@ -20,7 +20,7 @@ $swagger = (new Swagger('2.0', $info, $paths))
 ```
 
 #### Info
-A valid Info object requires only 2 things: the application name and version.
+A valid Info object requires the application name and version.
 ```php
 // (optional) contact from the example
 $contact = (new Contact())
@@ -41,33 +41,50 @@ $info = (new Info('Swagger Petstore (Simple)', '1.0.0'))
 ```
 
 #### Paths
-A valid Path object requires a route and at least 1 Operation
-The Operation requires an HTTP verb and at least 1 example Response
+A valid Path object requires a route and at least 1 Operation.
 ```php
-$petModel = (new Schema())
+$paths = [
+    new Path('/pets', $operations),
+];
+```
+
+#### Operations
+A valid Operation object requires an HTTP verb and at least 1 example Response.
+```php
+$addPet = (new Operation(Verb::POST, $responses))
+    ->setDescription('Creates a new pet in the store. Duplicates are allowed')
+    ->setOperationId('addPet')
+    ->setProducedMimes()
+    ->addParameter($addPetBody);
+
+$operations = [
+    $addPet,
+];
+```
+
+#### Responses
+A valid Response object requires a status code (or 'default') and a description.
+```php
+$petResponseModel = (new Schema())
     ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG), true)
     ->setProperty('name', new Schema(Type::STRING), true)
     ->setProperty('tag', new Schema(Type::STRING));
 
-$errorModel = (new Schema())
+$errorResponseModel = (new Schema())
     ->setProperty('code', (new Schema(Type::INTEGER))->setFormat(Format::INTEGER), true)
     ->setProperty('message', new Schema(Type::STRING), true);
 
+$newPet = (new Schema())
+    ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG))
+    ->setProperty('name', new Schema(Type::STRING), true)
+    ->setProperty('tag', new Schema(Type::STRING));
+
+$addPetBody = (new BodyParameter('pet', true, $newPet))
+    ->setDescription('Pet to add to the store');
+
 $responses = [
-    (new Response(200, 'pet response'))->setSchema($petModel),
-    (new Response('default', 'unexpected error'))->setSchema($errorModel),
-];
-
-$findPetById = (new Operation(Verb::GET, $responses))
-    ->setDescription('Returns a user based on a single ID, if the user does not have access to the pet')
-    ->setOperationId('findPetById')
-    ->setProducedMimes([Mime::APP_JSON, Mime::APP_XML, Mime::TEXT_XML, Mime::TEXT_HTML]);
-
-$paths = [
-    (new Path('/pets/{id}', [$findPetById]))
-        ->addParameter((new PathParameter('id', Type::INTEGER))
-            ->setFormat(Format::LONG)
-            ->setDescription('The ID of the pet to operate on.')),
+    (new Response(200, 'pet response'))->setSchema($petResponseModel),
+    (new Response('default', 'unexpected error'))->setSchema($errorResponseModel),
 ];
 ```
 See `/example.php` for a complete implementation of all the paths in the Petstore CRUD example.
@@ -77,11 +94,12 @@ Just json_encode the Swagger object (or any object which extends Component) to g
 ```php
 echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n";
 ```
+#### Result
 ```json
 {
     "paths": {
-        "/pets/{id}": {
-            "get": {
+        "/pets": {
+            "post": {
                 "responses": {
                     "200": {
                         "description": "pet response",
@@ -125,25 +143,38 @@ echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n"
                         }
                     }
                 },
-                "description": "Returns a user based on a single ID, if the user does not have access to the pet",
-                "operationId": "findPetById",
+                "description": "Creates a new pet in the store. Duplicates are allowed",
+                "operationId": "addPet",
                 "produces": [
-                    "application/json",
-                    "application/xml",
-                    "text/xml",
-                    "text/html"
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "pet",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name"
+                            ]
+                        },
+                        "description": "Pet to add to the store"
+                    }
                 ]
-            },
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "type": "integer",
-                    "required": true,
-                    "format": "int64",
-                    "description": "The ID of the pet to operate on."
-                }
-            ]
+            }
         }
     },
     "swagger": "2.0",

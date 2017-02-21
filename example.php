@@ -15,18 +15,17 @@ use SwagBag\Components\Swagger;
 use SwagBag\Constants\Format;
 use SwagBag\Constants\Mime;
 use SwagBag\Constants\ParamType;
-use SwagBag\Constants\Scheme;
 use SwagBag\Constants\Type;
 use SwagBag\Constants\Verb;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$petResponseModel = (new Schema())
+$petModel = (new Schema())
     ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG), true)
     ->setProperty('name', new Schema(Type::STRING), true)
     ->setProperty('tag', new Schema(Type::STRING));
 
-$errorResponseModel = (new Schema())
+$errorModel = (new Schema())
     ->setProperty('code', (new Schema(Type::INTEGER))->setFormat(Format::INTEGER), true)
     ->setProperty('message', new Schema(Type::STRING), true);
 
@@ -49,7 +48,7 @@ function buildInfo(): Info
 
 function buildFindPets(): Operation
 {
-    global $petResponseModel, $errorResponseModel;
+    global $petModel, $errorModel;
 
     $tags = (new Parameter('tags', Parameter::QUERY, ParamType::ARRAY))
         ->setDescription('tags to filter by')
@@ -60,8 +59,8 @@ function buildFindPets(): Operation
         ->setFormat(Format::INTEGER);
 
     $responses = [
-        (new Response(200, 'pet response'))->setSchema($petResponseModel),
-        (new Response('default', 'unexpected error'))->setSchema($errorResponseModel),
+        (new Response(200, 'pet response'))->setSchema($petModel),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
     ];
 
     return (new Operation(Verb::GET, $responses))
@@ -74,7 +73,7 @@ function buildFindPets(): Operation
 
 function buildAddPet(): Operation
 {
-    global $petResponseModel, $errorResponseModel;
+    global $petModel, $errorModel;
 
     $newPet = (new Schema())
         ->setProperty('id', (new Schema(Type::INTEGER))->setFormat(Format::LONG))
@@ -85,8 +84,8 @@ function buildAddPet(): Operation
         ->setDescription('Pet to add to the store');
 
     $responses = [
-        (new Response(200, 'pet response'))->setSchema($petResponseModel),
-        (new Response('default', 'unexpected error'))->setSchema($errorResponseModel),
+        (new Response(200, 'pet response'))->setSchema($petModel),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
     ];
 
     return (new Operation(Verb::POST, $responses))
@@ -98,11 +97,11 @@ function buildAddPet(): Operation
 
 function buildFindPetById(): Operation
 {
-    global $petResponseModel, $errorResponseModel;
+    global $petModel, $errorModel;
 
     $responses = [
-        (new Response(200, 'pet response'))->setSchema($petResponseModel),
-        (new Response('default', 'unexpected error'))->setSchema($errorResponseModel),
+        (new Response(200, 'pet response'))->setSchema($petModel),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
     ];
 
     return (new Operation(Verb::GET, $responses))
@@ -113,11 +112,11 @@ function buildFindPetById(): Operation
 
 function buildDeletePet(): Operation
 {
-    global $errorResponseModel;
+    global $errorModel;
 
     $responses = [
         new Response(204, 'pet deleted'),
-        (new Response('default', 'unexpected error'))->setSchema($errorResponseModel),
+        (new Response('default', 'unexpected error'))->setSchema($errorModel),
     ];
     return (new Operation(Verb::DELETE, $responses))
         ->setDescription('deletes a single pet based on the ID supplied')
@@ -135,8 +134,8 @@ $paths = [
 $swagger = (new Swagger('2.0', buildInfo(), $paths))
     ->setHost('petstore.swagger.io')
     ->setBasePath('/api')
-    ->setSchemes([Scheme::HTTP])
-    ->setConsumedMimes([Mime::APP_JSON])
-    ->setProducedMimes([Mime::APP_JSON]);
+    ->setSchemes()
+    ->setConsumedMimes()
+    ->setProducedMimes();
 
 echo str_replace(['\/'], ['/'], json_encode($swagger, JSON_PRETTY_PRINT)) . "\n";
