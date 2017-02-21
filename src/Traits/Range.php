@@ -25,6 +25,6 @@ trait Range
     {
         return $this
             ->set('maximum', $maximum)
-            ->set('exclusiveMinimum', $exclusive);
+            ->set('exclusiveMaximum', $exclusive);
     }
 }
