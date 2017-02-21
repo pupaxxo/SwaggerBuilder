@@ -2,8 +2,8 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Header;
-use SwagBag\Constants\Type;
+use SwaggerBuilder\Components\Header;
+use SwaggerBuilder\Constants\Type;
 use Tests\TestCase;
 
 class HeaderTest extends TestCase

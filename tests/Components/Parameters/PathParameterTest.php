@@ -2,9 +2,9 @@
 
 namespace Tests\Components\Parameters;
 
-use SwagBag\Components\Params\Parameter;
-use SwagBag\Components\Params\PathParameter;
-use SwagBag\Constants\Type;
+use SwaggerBuilder\Components\Params\Parameter;
+use SwaggerBuilder\Components\Params\PathParameter;
+use SwaggerBuilder\Constants\Type;
 use Tests\TestCase;
 
 class PathParameterTest extends TestCase

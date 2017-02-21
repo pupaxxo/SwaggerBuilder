@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Traits;
+namespace SwaggerBuilder\Traits;
 
-use SwagBag\Constants\Format;
+use SwaggerBuilder\Constants\Format;
 
 trait CollectionFormat
 {

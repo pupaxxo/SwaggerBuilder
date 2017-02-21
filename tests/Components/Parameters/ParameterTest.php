@@ -2,8 +2,8 @@
 
 namespace Tests\Components\Parameters;
 
-use SwagBag\Components\Params\Parameter;
-use SwagBag\Constants\Type;
+use SwaggerBuilder\Components\Params\Parameter;
+use SwaggerBuilder\Constants\Type;
 use Tests\TestCase;
 
 class ParameterTest extends TestCase

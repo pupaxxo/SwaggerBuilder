@@ -2,8 +2,8 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Example;
-use SwagBag\Constants\Mime;
+use SwaggerBuilder\Components\Example;
+use SwaggerBuilder\Constants\Mime;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase

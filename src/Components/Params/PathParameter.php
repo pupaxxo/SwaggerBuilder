@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Components\Params;
+namespace SwaggerBuilder\Components\Params;
 
-use SwagBag\Constants\ParamType;
+use SwaggerBuilder\Constants\ParamType;
 
 class PathParameter extends BaseParameter
 {

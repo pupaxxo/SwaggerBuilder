@@ -1,6 +1,6 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
 use JsonSerializable;
 

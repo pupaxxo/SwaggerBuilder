@@ -1,6 +1,6 @@
 <?php
 
-namespace SwagBag\Constants;
+namespace SwaggerBuilder\Constants;
 
 class Scheme
 {

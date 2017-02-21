@@ -1,11 +1,11 @@
 <?php
 
-namespace SwagBag\Components\Params;
+namespace SwaggerBuilder\Components\Params;
 
-use SwagBag\Components\Component;
-use SwagBag\Constants\ParamType;
-use SwagBag\Traits\Description;
-use SwagBag\Traits\Format;
+use SwaggerBuilder\Components\Component;
+use SwaggerBuilder\Constants\ParamType;
+use SwaggerBuilder\Traits\Description;
+use SwaggerBuilder\Traits\Format;
 
 abstract class BaseParameter extends Component
 {

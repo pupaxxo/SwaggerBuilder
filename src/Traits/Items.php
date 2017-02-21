@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Traits;
+namespace SwaggerBuilder\Traits;
 
-use SwagBag\Components\Items as ItemsComponent;
+use SwaggerBuilder\Components\Items as ItemsComponent;
 
 trait Items
 {

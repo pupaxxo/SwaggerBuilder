@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Traits\Description;
+use SwaggerBuilder\Traits\Description;
 
 class Response extends Component
 {

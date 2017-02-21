@@ -1,14 +1,14 @@
 <?php
 
-namespace SwagBag\Components\Params;
+namespace SwaggerBuilder\Components\Params;
 
-use SwagBag\Traits\CollectionFormat;
-use SwagBag\Traits\Enum;
-use SwagBag\Traits\Format;
-use SwagBag\Traits\Items;
-use SwagBag\Traits\Length;
-use SwagBag\Traits\Pattern;
-use SwagBag\Traits\Range;
+use SwaggerBuilder\Traits\CollectionFormat;
+use SwaggerBuilder\Traits\Enum;
+use SwaggerBuilder\Traits\Format;
+use SwaggerBuilder\Traits\Items;
+use SwaggerBuilder\Traits\Length;
+use SwaggerBuilder\Traits\Pattern;
+use SwaggerBuilder\Traits\Range;
 
 class Parameter extends BaseParameter
 {

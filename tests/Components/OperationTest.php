@@ -3,12 +3,12 @@
 namespace Tests\Components;
 
 use InvalidArgumentException;
-use SwagBag\Components\Operation;
-use SwagBag\Components\Params\BaseParameter;
-use SwagBag\Components\Response;
-use SwagBag\Constants\Mime;
-use SwagBag\Constants\Scheme;
-use SwagBag\Constants\Verb;
+use SwaggerBuilder\Components\Operation;
+use SwaggerBuilder\Components\Params\BaseParameter;
+use SwaggerBuilder\Components\Response;
+use SwaggerBuilder\Constants\Mime;
+use SwaggerBuilder\Constants\Scheme;
+use SwaggerBuilder\Constants\Verb;
 use Tests\ArrayAssertions;
 use Tests\TestCase;
 

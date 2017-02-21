@@ -1,6 +1,6 @@
 <?php
 
-namespace SwagBag\Traits;
+namespace SwaggerBuilder\Traits;
 
 trait Pattern
 {

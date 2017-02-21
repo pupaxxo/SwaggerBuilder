@@ -1,16 +1,16 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Constants\SchemaType;
-use SwagBag\Traits\Description;
-use SwagBag\Traits\Enum;
-use SwagBag\Traits\Format;
-use SwagBag\Traits\Items;
-use SwagBag\Traits\Length;
-use SwagBag\Traits\Pattern;
-use SwagBag\Traits\Range;
-use SwagBag\Traits\Type;
+use SwaggerBuilder\Constants\SchemaType;
+use SwaggerBuilder\Traits\Description;
+use SwaggerBuilder\Traits\Enum;
+use SwaggerBuilder\Traits\Format;
+use SwaggerBuilder\Traits\Items;
+use SwaggerBuilder\Traits\Length;
+use SwaggerBuilder\Traits\Pattern;
+use SwaggerBuilder\Traits\Range;
+use SwaggerBuilder\Traits\Type;
 
 class Schema extends Component
 {

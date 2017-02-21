@@ -9,7 +9,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "SwagBag\\": "src/",
+      "SwaggerBuilder\\": "src/",
       "Tests\\": "tests/"
     }
   },

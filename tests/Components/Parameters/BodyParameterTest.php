@@ -2,9 +2,9 @@
 
 namespace Tests\Components\Parameters;
 
-use SwagBag\Components\Params\BodyParameter;
-use SwagBag\Components\Params\Parameter;
-use SwagBag\Components\Schema;
+use SwaggerBuilder\Components\Params\BodyParameter;
+use SwaggerBuilder\Components\Params\Parameter;
+use SwaggerBuilder\Components\Schema;
 use Tests\TestCase;
 
 class BodyParameterTest extends TestCase

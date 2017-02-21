@@ -1,10 +1,10 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Traits\Mimes;
-use SwagBag\Traits\Schemes;
-use SwagBag\Validator;
+use SwaggerBuilder\Traits\Mimes;
+use SwaggerBuilder\Traits\Schemes;
+use SwaggerBuilder\Validator;
 
 class Swagger extends Component
 {

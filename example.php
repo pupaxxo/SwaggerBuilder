@@ -1,22 +1,22 @@
 <?php
 
-use SwagBag\Components\Contact;
-use SwagBag\Components\Info;
-use SwagBag\Components\Items;
-use SwagBag\Components\License;
-use SwagBag\Components\Operation;
-use SwagBag\Components\Params\BodyParameter;
-use SwagBag\Components\Params\Parameter;
-use SwagBag\Components\Params\PathParameter;
-use SwagBag\Components\Path;
-use SwagBag\Components\Response;
-use SwagBag\Components\Schema;
-use SwagBag\Components\Swagger;
-use SwagBag\Constants\Format;
-use SwagBag\Constants\Mime;
-use SwagBag\Constants\ParamType;
-use SwagBag\Constants\Type;
-use SwagBag\Constants\Verb;
+use SwaggerBuilder\Components\Contact;
+use SwaggerBuilder\Components\Info;
+use SwaggerBuilder\Components\Items;
+use SwaggerBuilder\Components\License;
+use SwaggerBuilder\Components\Operation;
+use SwaggerBuilder\Components\Params\BodyParameter;
+use SwaggerBuilder\Components\Params\Parameter;
+use SwaggerBuilder\Components\Params\PathParameter;
+use SwaggerBuilder\Components\Path;
+use SwaggerBuilder\Components\Response;
+use SwaggerBuilder\Components\Schema;
+use SwaggerBuilder\Components\Swagger;
+use SwaggerBuilder\Constants\Format;
+use SwaggerBuilder\Constants\Mime;
+use SwaggerBuilder\Constants\ParamType;
+use SwaggerBuilder\Constants\Type;
+use SwaggerBuilder\Constants\Verb;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Constants\Type as SwaggerTypes;
-use SwagBag\Traits\CollectionFormat;
-use SwagBag\Traits\Enum;
-use SwagBag\Traits\Format;
-use SwagBag\Traits\Items as ItemsTrait;
-use SwagBag\Traits\Length;
-use SwagBag\Traits\Pattern;
-use SwagBag\Traits\Range;
-use SwagBag\Traits\Type;
+use SwaggerBuilder\Constants\Type as SwaggerTypes;
+use SwaggerBuilder\Traits\CollectionFormat;
+use SwaggerBuilder\Traits\Enum;
+use SwaggerBuilder\Traits\Format;
+use SwaggerBuilder\Traits\Items as ItemsTrait;
+use SwaggerBuilder\Traits\Length;
+use SwaggerBuilder\Traits\Pattern;
+use SwaggerBuilder\Traits\Range;
+use SwaggerBuilder\Traits\Type;
 
 class Items extends Component
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Traits;
 
-use SwagBag\Components\Component;
-use SwagBag\Traits\Range;
+use SwaggerBuilder\Components\Component;
+use SwaggerBuilder\Traits\Range;
 use Tests\TestCase;
 
 class RangeTest extends TestCase

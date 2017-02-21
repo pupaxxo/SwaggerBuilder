@@ -2,8 +2,8 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Schema;
-use SwagBag\Constants\SchemaType;
+use SwaggerBuilder\Components\Schema;
+use SwaggerBuilder\Constants\SchemaType;
 use Tests\TestCase;
 
 class SchemaTest extends TestCase

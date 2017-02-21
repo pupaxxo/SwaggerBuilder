@@ -2,7 +2,7 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Contact;
+use SwaggerBuilder\Components\Contact;
 use Tests\TestCase;
 
 class ContactTest extends TestCase

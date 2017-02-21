@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use SwagBag\Components\Component;
+use SwaggerBuilder\Components\Component;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Traits\Parameters;
-use SwagBag\Validator;
+use SwaggerBuilder\Traits\Parameters;
+use SwaggerBuilder\Validator;
 
 class Path extends Component
 {

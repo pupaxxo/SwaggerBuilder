@@ -1,9 +1,9 @@
 <?php
 
-namespace SwagBag\Traits;
+namespace SwaggerBuilder\Traits;
 
-use SwagBag\Components\Component;
-use SwagBag\Constants\Mime;
+use SwaggerBuilder\Components\Component;
+use SwaggerBuilder\Constants\Mime;
 
 trait Mimes
 {

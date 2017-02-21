@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Traits;
+namespace SwaggerBuilder\Traits;
 
-use SwagBag\Components\Params\BaseParameter;
+use SwaggerBuilder\Components\Params\BaseParameter;
 
 trait Parameters
 {

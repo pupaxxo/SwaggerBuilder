@@ -2,11 +2,11 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Info;
-use SwagBag\Components\Path;
-use SwagBag\Components\Swagger;
-use SwagBag\Constants\Mime;
-use SwagBag\Constants\Scheme;
+use SwaggerBuilder\Components\Info;
+use SwaggerBuilder\Components\Path;
+use SwaggerBuilder\Components\Swagger;
+use SwaggerBuilder\Constants\Mime;
+use SwaggerBuilder\Constants\Scheme;
 use Tests\ArrayAssertions;
 use Tests\TestCase;
 

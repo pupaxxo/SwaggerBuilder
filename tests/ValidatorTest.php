@@ -3,7 +3,7 @@
 namespace Tests;
 
 use InvalidArgumentException;
-use SwagBag\Validator;
+use SwaggerBuilder\Validator;
 
 class ValidatorTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\License;
+use SwaggerBuilder\Components\License;
 use Tests\TestCase;
 
 class LicenseTest extends TestCase

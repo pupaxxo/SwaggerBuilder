@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Components\Params;
+namespace SwaggerBuilder\Components\Params;
 
-use SwagBag\Components\Schema;
+use SwaggerBuilder\Components\Schema;
 
 class BodyParameter extends BaseParameter
 {

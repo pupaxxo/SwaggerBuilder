@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Traits;
+namespace SwaggerBuilder\Traits;
 
-use SwagBag\Constants\Type as SwaggerTypes;
+use SwaggerBuilder\Constants\Type as SwaggerTypes;
 
 trait Type
 {

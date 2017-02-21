@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Constants\Mime;
+use SwaggerBuilder\Constants\Mime;
 
 class Example extends Component
 {

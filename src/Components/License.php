@@ -1,8 +1,8 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
-use SwagBag\Traits\Patterned;
+use SwaggerBuilder\Traits\Patterned;
 
 class License extends Component
 {

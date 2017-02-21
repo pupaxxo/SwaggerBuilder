@@ -2,9 +2,9 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Items;
-use SwagBag\Constants\SchemaType;
-use SwagBag\Constants\Type;
+use SwaggerBuilder\Components\Items;
+use SwaggerBuilder\Constants\SchemaType;
+use SwaggerBuilder\Constants\Type;
 use Tests\TestCase;
 
 class ItemsTest extends TestCase

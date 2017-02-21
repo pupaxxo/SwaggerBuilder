@@ -1,14 +1,14 @@
 <?php
 
-namespace SwagBag\Components;
+namespace SwaggerBuilder\Components;
 
 use InvalidArgumentException;
-use SwagBag\Constants\Verb;
-use SwagBag\Traits\Description;
-use SwagBag\Traits\Mimes;
-use SwagBag\Traits\Parameters;
-use SwagBag\Traits\Schemes;
-use SwagBag\Validator;
+use SwaggerBuilder\Constants\Verb;
+use SwaggerBuilder\Traits\Description;
+use SwaggerBuilder\Traits\Mimes;
+use SwaggerBuilder\Traits\Parameters;
+use SwaggerBuilder\Traits\Schemes;
+use SwaggerBuilder\Validator;
 
 class Operation extends Component
 {

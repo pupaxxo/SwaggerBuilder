@@ -2,11 +2,11 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Example;
-use SwagBag\Components\Header;
-use SwagBag\Components\Response;
-use SwagBag\Components\Schema;
-use SwagBag\Constants\Mime;
+use SwaggerBuilder\Components\Example;
+use SwaggerBuilder\Components\Header;
+use SwaggerBuilder\Components\Response;
+use SwaggerBuilder\Components\Schema;
+use SwaggerBuilder\Constants\Mime;
 use Tests\TestCase;
 
 class ResponseTest extends TestCase

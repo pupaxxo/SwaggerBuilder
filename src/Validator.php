@@ -1,6 +1,6 @@
 <?php
 
-namespace SwagBag;
+namespace SwaggerBuilder;
 
 use InvalidArgumentException;
 

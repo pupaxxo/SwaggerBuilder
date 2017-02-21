@@ -2,9 +2,9 @@
 
 namespace Tests\Components;
 
-use SwagBag\Components\Contact;
-use SwagBag\Components\Info;
-use SwagBag\Components\License;
+use SwaggerBuilder\Components\Contact;
+use SwaggerBuilder\Components\Info;
+use SwaggerBuilder\Components\License;
 use Tests\TestCase;
 
 class InfoTest extends TestCase
