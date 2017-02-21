@@ -6,7 +6,7 @@ use JsonSerializable;
 
 class Component implements JsonSerializable
 {
-    private $structure = [];
+    protected $structure = [];
 
     function jsonSerialize()
     {

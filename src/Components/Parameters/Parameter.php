@@ -1,16 +1,20 @@
 <?php
 
-namespace SwagBag\Components\Params;
+namespace SwagBag\Components\Parameters;
 
 use SwagBag\Components\Component;
 use SwagBag\Constants\ParamType;
+use SwagBag\Traits\Description;
+use SwagBag\Traits\Enum;
 use SwagBag\Traits\Items;
 use SwagBag\Traits\Length;
+use SwagBag\Traits\Pattern;
 use SwagBag\Traits\Range;
+use SwagBag\Traits\Type;
 
 class Parameter extends Component
 {
-    use Items, Range, Length;
+    use Description, Type, Items, Range, Length, Pattern, Enum;
 
     const QUERY = 'query';
     const HEADER = 'header';
