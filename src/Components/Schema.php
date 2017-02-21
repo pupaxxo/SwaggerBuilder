@@ -3,27 +3,26 @@
 namespace SwagBag\Components;
 
 use SwagBag\Constants\SchemaType;
+use SwagBag\Traits\Description;
+use SwagBag\Traits\Enum;
+use SwagBag\Traits\Items;
+use SwagBag\Traits\Length;
+use SwagBag\Traits\Pattern;
+use SwagBag\Traits\Range;
+use SwagBag\Traits\Type;
 
 class Schema extends Component
 {
+    use Description, Type, Items, Range, Length, Pattern, Enum;
+
     public function __construct(string $type = SchemaType::OBJECT)
     {
         $this->setType($type);
     }
 
-    private function setType(string $type): Schema
-    {
-        return $this->set('type', $type);
-    }
-
     public function setProperty(string $name, Schema $schema): Schema
     {
         return $this->set("properties.{$name}", $schema);
-    }
-
-    public function setDescription(string $description): Schema
-    {
-        return $this->set('description', $description);
     }
 
     /**

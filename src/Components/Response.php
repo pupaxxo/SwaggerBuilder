@@ -2,19 +2,18 @@
 
 namespace SwagBag\Components;
 
+use SwagBag\Traits\Description;
+
 class Response extends Component
 {
+    use Description;
+
     private $code;
 
     public function __construct(int $code = 200, string $description = 'The response to this request.')
     {
         $this->code = $code;
         $this->setDescription($description);
-    }
-
-    private function setDescription(string $description): Response
-    {
-        return $this->set('description', $description);
     }
 
     public function getCode(): int

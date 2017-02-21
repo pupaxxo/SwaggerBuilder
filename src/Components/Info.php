@@ -2,18 +2,17 @@
 
 namespace SwagBag\Components;
 
+use SwagBag\Traits\Description;
+
 class Info extends Component
 {
+    use Description;
+
     public function __construct(string $title = 'My App', string $version = '0.0.0-dev')
     {
         $this
             ->set('title', $title)
             ->set('version', $version);
-    }
-
-    public function setDescription(string $description = 'My API.'): Info
-    {
-        return $this->set('description', $description);
     }
 
     public function setTermsOfService(string $tos = 'Do not misuse this API.'): Info

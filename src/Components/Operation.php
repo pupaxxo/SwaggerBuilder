@@ -4,6 +4,7 @@ namespace SwagBag\Components;
 
 use InvalidArgumentException;
 use SwagBag\Constants\Verb;
+use SwagBag\Traits\Description;
 use SwagBag\Traits\Mimes;
 use SwagBag\Traits\Parameters;
 use SwagBag\Traits\Schemes;
@@ -11,7 +12,7 @@ use SwagBag\Validator;
 
 class Operation extends Component
 {
-    use Mimes, Parameters, Schemes;
+    use Mimes, Parameters, Schemes, Description;
 
     private static $IDS = [];
 
@@ -44,11 +45,6 @@ class Operation extends Component
     public function setSummary(string $summary): Operation
     {
         return $this->set('summary', $summary);
-    }
-
-    public function setDescription(string $description): Operation
-    {
-        return $this->set('description', $description);
     }
 
     public function setOperationId(string $id): Operation

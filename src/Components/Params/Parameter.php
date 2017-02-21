@@ -5,10 +5,12 @@ namespace SwagBag\Components\Params;
 use SwagBag\Components\Component;
 use SwagBag\Constants\ParamType;
 use SwagBag\Traits\Items;
+use SwagBag\Traits\Length;
+use SwagBag\Traits\Range;
 
 class Parameter extends Component
 {
-    use Items;
+    use Items, Range, Length;
 
     const QUERY = 'query';
     const HEADER = 'header';
@@ -32,11 +34,6 @@ class Parameter extends Component
         return $this->set('required', $required);
     }
 
-    private function setType(string $type): Parameter
-    {
-        return $this->set('type', $type);
-    }
-
     private function setIn(string $in): Parameter
     {
         return $this->set('in', $in);
@@ -45,34 +42,5 @@ class Parameter extends Component
     private function setName(string $name): Parameter
     {
         return $this->set('name', $name);
-    }
-
-    public function setDescription(string $description = 'Filters include [name, email]'): Parameter
-    {
-        return $this->set('description', $description);
-    }
-
-    public function setMin($minimum): Parameter
-    {
-        return $this
-            ->set('minimum', $minimum)
-            ->set('exclusiveMinimum', false);
-    }
-
-    public function setMax($maximum): Parameter
-    {
-        return $this
-            ->set('maximum', $maximum)
-            ->set('exclusiveMinimum', false);
-    }
-
-    public function setMinLength(int $minLength = 0): Parameter
-    {
-        return $this->set('minLength', $minLength);
-    }
-
-    public function setMaxLength(int $maxLength = 144): Parameter
-    {
-        return $this->set('maxLength', $maxLength);
     }
 }
