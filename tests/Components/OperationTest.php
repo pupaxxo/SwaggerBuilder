@@ -91,8 +91,8 @@ class OperationTest extends TestCase
     public function testItCompilesEverything()
     {
         $status = 200;
-        $consumes = [Mime::JSON];
-        $produces = [Mime::JSON];
+        $consumes = [Mime::APP_JSON];
+        $produces = [Mime::APP_JSON];
         $expected = [
             'summary' => 'Add a new pet to the store',
             'description' => 'Store some pet data in a database somewhere.',
@@ -115,18 +115,12 @@ class OperationTest extends TestCase
             ->setSummary($expected['summary'])
             ->setDescription($expected['description'])
             ->setOperationId($expected['operationId'])
+            ->setConsumedMimes($expected['consumes'])
+            ->setProducedMimes($expected['produces'])
+            ->setSchemes($expected['schemes'])
             ->setDeprecated();
-        foreach ($expected['consumes'] as $mime) {
-            $operation->addConsumedMime($mime);
-        }
-        foreach ($expected['produces'] as $mime) {
-            $operation->addProducedMime($mime);
-        }
         foreach ($expected['parameters'] as $parameter) {
             $operation->addParameter($parameter);
-        }
-        foreach ($expected['schemes'] as $scheme) {
-            $operation->addScheme($scheme);
         }
 
         static::assertComponentStructure($expected, $operation);

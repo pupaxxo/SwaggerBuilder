@@ -2,16 +2,19 @@
 
 namespace SwagBag\Traits;
 
+use SwagBag\Components\Component;
 use SwagBag\Constants\Scheme;
 
 trait Schemes
 {
     /**
-     * @param string $scheme
+     * @param string[] $schemes
      * @return static
      */
-    public function addScheme(string $scheme = Scheme::HTTP)
+    public function setSchemes(array $schemes = [Scheme::HTTP])
     {
-        return $this->add('schemes', $scheme);
+        return array_reduce($schemes, function (Component $acc, string $scheme) {
+            return $acc->add('schemes', $scheme);
+        }, $this);
     }
 }

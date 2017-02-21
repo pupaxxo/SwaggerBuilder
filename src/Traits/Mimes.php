@@ -2,25 +2,30 @@
 
 namespace SwagBag\Traits;
 
+use SwagBag\Components\Component;
 use SwagBag\Constants\Mime;
 
 trait Mimes
 {
     /**
-     * @param string $mime
+     * @param string[] $mimes
      * @return static
      */
-    public function addConsumedMime(string $mime = Mime::JSON)
+    public function setConsumedMimes(array $mimes = [Mime::APP_JSON])
     {
-        return $this->add('consumes', $mime);
+        return array_reduce($mimes, function (Component $acc, string $mime) {
+            return $acc->add('consumes', $mime);
+        }, $this);
     }
 
     /**
-     * @param string $mime
+     * @param string[] $mimes
      * @return static
      */
-    public function addProducedMime(string $mime = Mime::JSON)
+    public function setProducedMimes(array $mimes = [Mime::APP_JSON])
     {
-        return $this->add('produces', $mime);
+        return array_reduce($mimes, function (Component $acc, string $mime) {
+            return $acc->add('produces', $mime);
+        }, $this);
     }
 }

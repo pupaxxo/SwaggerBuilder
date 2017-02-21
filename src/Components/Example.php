@@ -8,7 +8,7 @@ class Example extends Component
 {
     private $mime;
 
-    public function __construct(string $mime = Mime::JSON, array $structure = null)
+    public function __construct(string $mime = Mime::APP_JSON, array $structure = null)
     {
         $this->mime = $mime;
         foreach ($structure as $key => $value) {

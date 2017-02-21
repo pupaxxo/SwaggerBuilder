@@ -10,7 +10,7 @@ class ExampleTest extends TestCase
 {
     public function testItStoresItsMime()
     {
-        $mime = Mime::JSON;
+        $mime = Mime::APP_JSON;
         $example = new Example($mime, []);
 
         static::assertEquals($mime, $example->getMime());
@@ -18,7 +18,7 @@ class ExampleTest extends TestCase
 
     public function testItCompilesEverything()
     {
-        $mime = Mime::JSON;
+        $mime = Mime::APP_JSON;
         $expected = [
             'type' => 'User',
             'id' => 42,

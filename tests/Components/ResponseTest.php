@@ -39,7 +39,7 @@ class ResponseTest extends TestCase
     {
         $code = 200;
         $rateLimit = 'X-Rate-Limit-Limit';
-        $exampleMime = Mime::JSON;
+        $exampleMime = Mime::APP_JSON;
         $expected = [
             'description' => 'successful operation',
             'schema' => $this->createMock(Schema::class),

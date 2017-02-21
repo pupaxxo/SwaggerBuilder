@@ -65,23 +65,17 @@ class SwaggerTest extends TestCase
             'info' => $this->createMock(Info::class),
             'host' => 'petstore.swagger.io',
             'basePath' => '/v2',
-            'consumes' => [Mime::JSON],
-            'produces' => [Mime::JSON],
+            'consumes' => [Mime::APP_JSON],
+            'produces' => [Mime::APP_JSON],
             'schemes' => [Scheme::HTTP],
         ];
 
         $swagger = (new Swagger($expected['swagger'], $expected['info'], $expected['paths']))
             ->setHost($expected['host'])
-            ->setBasePath($expected['basePath']);
-        foreach ($expected['consumes'] as $mime) {
-            $swagger->addConsumedMime($mime);
-        }
-        foreach ($expected['produces'] as $mime) {
-            $swagger->addProducedMime($mime);
-        }
-        foreach ($expected['schemes'] as $scheme) {
-            $swagger->addScheme($scheme);
-        }
+            ->setBasePath($expected['basePath'])
+            ->setConsumedMimes($expected['consumes'])
+            ->setProducedMimes($expected['produces'])
+            ->setSchemes($expected['schemes']);
 
         static::assertComponentStructure($expected, $swagger);
     }

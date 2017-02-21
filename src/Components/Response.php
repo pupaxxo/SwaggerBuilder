@@ -10,13 +10,18 @@ class Response extends Component
 
     private $code;
 
-    public function __construct(int $code = 200, string $description = 'The response to this request.')
+    /**
+     * Response constructor.
+     * @param integer|string $code
+     * @param string $description
+     */
+    public function __construct($code = 'default', string $description = 'The response to this request.')
     {
         $this->code = $code;
         $this->setDescription($description);
     }
 
-    public function getCode(): int
+    public function getCode()
     {
         return $this->code;
     }
