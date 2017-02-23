@@ -13,6 +13,11 @@ class Component implements JsonSerializable
         return $this->structure;
     }
 
+    /**
+     * @param string $key
+     * @param $value
+     * @return Component|static
+     */
     protected function add(string $key, $value): Component
     {
         $keys = explode('.', $key);
@@ -27,6 +32,11 @@ class Component implements JsonSerializable
         return $this;
     }
 
+    /**
+     * @param string $key
+     * @param $value
+     * @return Component|static
+     */
     protected function set(string $key, $value): Component
     {
         $keys = explode('.', $key);
