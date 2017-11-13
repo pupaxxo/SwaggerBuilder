@@ -18,7 +18,7 @@ class Component implements JsonSerializable
      * @param $value
      * @return Component|static
      */
-    protected function add(string $key, $value): Component
+    public function add(string $key, $value): Component
     {
         $keys = explode('.', $key);
         $iterator = &$this->structure;
@@ -37,7 +37,7 @@ class Component implements JsonSerializable
      * @param $value
      * @return Component|static
      */
-    protected function set(string $key, $value): Component
+    public function set(string $key, $value): Component
     {
         $keys = explode('.', $key);
         $valueKey = array_pop($keys);
