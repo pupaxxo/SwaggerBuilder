@@ -1,11 +1,11 @@
 {
-  "name": "samueldavis/swagger-builder",
+  "name": "pupaxxo/swagger-builder",
   "description": "Compile Swagger2.0 JSON using PHP.",
   "type": "project",
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:SamuelDavis/SwaggerBuilder.git"
+      "url": "git@github.com:pupaxxo/SwaggerBuilder.git"
     }
   ],
   "license": "MIT",
@@ -13,6 +13,10 @@
     {
       "name": "Samuel Davis",
       "email": "samueljakdavis@gmail.com"
+    },
+    {
+      "name": "Andrea Ruggiero",
+      "email": "pupax@outlook.com"
     }
   ],
   "autoload": {
